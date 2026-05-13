@@ -2,29 +2,19 @@
 
 import { useState } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import Link from "next/link"
-import { FileText, Calendar, Building, ChevronRight, ArrowLeft } from "lucide-react"
+import { FileText, ArrowLeft, ExternalLink } from "lucide-react"
 
 const reports = [
-  {
-    id: "april-2026-blood",
-    title: "April 2026 Blood Reports",
-    date: "April 13, 2026",
-    lab: "Dr Lal PathLabs",
-    description: "Complete Blood Count, Kidney Function Test, Multiple Myeloma Screening Panel, Immunoglobulin Profile, Kappa/Lambda Light Chains",
-    file: "/reports/april-2026-blood-reports.pdf",
-    category: "blood",
-  },
-  {
-    id: "bone-marrow-may-2026",
-    title: "Bone Marrow Biopsy Report",
-    date: "May 2026",
-    lab: "Oncology Center",
-    description: "Bone Marrow Aspiration and Biopsy, Flow Cytometry, MRD Analysis",
-    file: "/reports/bone-marrow-may-2026.pdf",
-    category: "biopsy",
-  },
+  // 2026
+  { id: "bone-marrow-may-2026", year: "2026", date: "May", title: "Bone Marrow Biopsy", file: "/reports/bone-marrow-may-2026.pdf" },
+  { id: "april-2026-blood", year: "2026", date: "April", title: "Blood Reports (CBC, KFT, Myeloma Panel)", file: "/reports/april-2026-blood-reports.pdf" },
+  { id: "march-2026-pet-ct", year: "2026", date: "March", title: "PET CT Scan", file: "/reports/2026-march-pet-ct.pdf" },
+  { id: "2026-2025-kft-cbc", year: "2026-2025", date: "Multiple", title: "KFT & CBC Trend Reports", file: "/reports/2026-2025-kft-cbc.pdf" },
+  // 2025
+  { id: "dec-2025-myeloma", year: "2025", date: "December", title: "Myeloma Panel", file: "/reports/2025-december-myeloma-panel.pdf" },
+  { id: "aug-2025-myeloma", year: "2025", date: "August", title: "Myeloma Panel", file: "/reports/2025-august-myeloma-panel.pdf" },
+  { id: "2025-kft-cbc", year: "2025", date: "Jul-Dec", title: "KFT & CBC Reports", file: "/reports/2025-kft-cbc.pdf" },
 ]
 
 export default function ReportsPage() {
@@ -57,109 +47,69 @@ export default function ReportsPage() {
       </nav>
 
       <main className="max-w-6xl mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-[380px_1fr] gap-6">
+        <div className="grid lg:grid-cols-[320px_1fr] gap-6">
           {/* Reports List */}
-          <div className="space-y-4">
-            <h2 className="text-lg font-semibold text-slate-900">Available Reports</h2>
-            <div className="space-y-3">
-              {reports.map((report) => (
-                <button
-                  key={report.id}
-                  onClick={() => setSelectedReport(report.id)}
-                  className={`w-full text-left transition-all ${
-                    selectedReport === report.id
-                      ? "ring-2 ring-blue-500 ring-offset-2"
-                      : "hover:shadow-md"
-                  }`}
-                >
-                  <Card className={selectedReport === report.id ? "border-blue-500" : ""}>
-                    <CardContent className="p-4">
-                      <div className="flex items-start gap-3">
-                        <div
-                          className={`p-2 rounded-lg ${
-                            report.category === "blood"
-                              ? "bg-red-100 text-red-600"
-                              : "bg-purple-100 text-purple-600"
-                          }`}
-                        >
-                          <FileText className="w-5 h-5" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-slate-900 text-sm">{report.title}</h3>
-                          <div className="flex items-center gap-2 mt-1 text-xs text-slate-500">
-                            <Calendar className="w-3 h-3" />
-                            <span>{report.date}</span>
-                          </div>
-                          <div className="flex items-center gap-2 mt-0.5 text-xs text-slate-500">
-                            <Building className="w-3 h-3" />
-                            <span>{report.lab}</span>
-                          </div>
-                          <p className="text-xs text-slate-600 mt-2 line-clamp-2">
-                            {report.description}
-                          </p>
-                        </div>
-                        <ChevronRight
-                          className={`w-5 h-5 text-slate-400 flex-shrink-0 transition-transform ${
-                            selectedReport === report.id ? "rotate-90" : ""
-                          }`}
-                        />
-                      </div>
-                    </CardContent>
-                  </Card>
-                </button>
-              ))}
+          <div>
+            {/* Instructions */}
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+              <p className="text-sm text-blue-800 font-medium">
+                Click on any report below to view it in the PDF viewer.
+              </p>
             </div>
 
-            {/* Legend */}
-            <div className="mt-6 p-4 bg-slate-100 rounded-lg">
-              <h3 className="text-sm font-medium text-slate-700 mb-2">Report Categories</h3>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-sm">
-                  <div className="w-3 h-3 rounded bg-red-500" />
-                  <span className="text-slate-600">Blood Work / Lab Tests</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <div className="w-3 h-3 rounded bg-purple-500" />
-                  <span className="text-slate-600">Biopsy / Pathology</span>
-                </div>
-              </div>
-            </div>
+            <h2 className="text-lg font-semibold text-slate-900 mb-4">Available Reports</h2>
+            
+            <ul className="space-y-2">
+              {reports.map((report) => (
+                <li key={report.id}>
+                  <button
+                    onClick={() => setSelectedReport(report.id)}
+                    className={`w-full text-left px-3 py-2 rounded-lg transition-all flex items-center gap-2 text-sm ${
+                      selectedReport === report.id
+                        ? "bg-blue-600 text-white"
+                        : "hover:bg-slate-100 text-slate-700"
+                    }`}
+                  >
+                    <span className="font-medium">{report.year}</span>
+                    <span className={selectedReport === report.id ? "text-blue-200" : "text-slate-400"}>•</span>
+                    <span className={selectedReport === report.id ? "text-blue-100" : "text-slate-500"}>{report.date}</span>
+                    <span className={selectedReport === report.id ? "text-blue-200" : "text-slate-400"}>•</span>
+                    <span className="flex-1">{report.title}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* PDF Viewer Section */}
           <div className="lg:sticky lg:top-[160px] lg:self-start">
             <Card className="overflow-hidden">
-              <CardHeader className="border-b bg-slate-50 py-3">
+              <CardHeader className="border-b bg-slate-50 py-3 flex flex-row items-center justify-between">
                 <CardTitle className="text-base flex items-center gap-2">
                   <FileText className="w-5 h-5 text-slate-500" />
-                  {selectedReportData ? selectedReportData.title : "Select a Report"}
+                  {selectedReportData 
+                    ? `${selectedReportData.date} ${selectedReportData.year} — ${selectedReportData.title}` 
+                    : "Select a Report"}
                 </CardTitle>
                 {selectedReportData && (
-                  <div className="flex items-center gap-4 mt-1">
-                    <Badge variant="outline" className="text-xs">
-                      {selectedReportData.date}
-                    </Badge>
-                    <span className="text-xs text-slate-500">{selectedReportData.lab}</span>
-                  </div>
+                  <a
+                    href={selectedReportData.file}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    Open in New Tab
+                  </a>
                 )}
               </CardHeader>
               <CardContent className="p-0">
                 {selectedReport && selectedReportData ? (
-                  <div className="relative">
-                    <iframe
-                      src={selectedReportData.file}
-                      className="w-full h-[calc(100vh-280px)] min-h-[600px] border-0"
-                      title={selectedReportData.title}
-                    />
-                    <a
-                      href={selectedReportData.file}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="absolute bottom-4 right-4 px-4 py-2 bg-slate-900 text-white text-sm rounded-lg hover:bg-slate-800 transition-colors shadow-lg"
-                    >
-                      Open in New Tab
-                    </a>
-                  </div>
+                  <iframe
+                    src={selectedReportData.file}
+                    className="w-full h-[calc(100vh-280px)] min-h-[600px] border-0"
+                    title={selectedReportData.title}
+                  />
                 ) : (
                   <div className="flex flex-col items-center justify-center h-[500px] text-slate-400">
                     <FileText className="w-16 h-16 mb-4 opacity-50" />
@@ -176,7 +126,6 @@ export default function ReportsPage() {
       {/* Footer */}
       <footer className="text-center text-sm text-slate-500 py-8 border-t border-slate-200 mt-8">
         <p>Medical Reports Archive — Last Updated: May 2026</p>
-        <p className="mt-1">These documents are for medical reference purposes only.</p>
       </footer>
     </div>
   )
