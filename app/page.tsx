@@ -15,6 +15,8 @@ import {
   AreaChart,
   Area,
 } from "recharts"
+import Link from "next/link"
+import { FileText } from "lucide-react"
 
 // Biomarker data for charts
 const kappaFLCData = [
@@ -83,6 +85,10 @@ export default function MedicalHistory() {
           <a href="#markers" className="text-sm px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">Markers</a>
           <a href="#concerns" className="text-sm px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">Concerns</a>
           <a href="#charts" className="text-sm px-3 py-1 rounded-full bg-blue-100 hover:bg-blue-200 text-blue-700 transition-colors">Charts</a>
+          <Link href="/reports" className="text-sm px-3 py-1 rounded-full bg-slate-900 hover:bg-slate-800 text-white transition-colors flex items-center gap-1">
+            <FileText className="w-3.5 h-3.5" />
+            Reports
+          </Link>
         </div>
       </nav>
 
