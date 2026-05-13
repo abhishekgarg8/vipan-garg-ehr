@@ -32,7 +32,8 @@ const kappaFLCData = [
   { date: "Feb 2025", value: 46.57, event: "Maintenance" },
   { date: "May 2025", value: 48.70, event: "Maintenance" },
   { date: "Aug 2025", value: 38.71, event: "Maintenance" },
-  { date: "Apr 2026", value: 97.65, event: "Latest" },
+  { date: "Dec 2025", value: 37.53, event: "Maintenance" },
+  { date: "Apr 2026", value: 97.65, event: "Disease escape" },
 ]
 
 const eGFRData = [
@@ -42,7 +43,15 @@ const eGFRData = [
   { date: "Sep 2024", value: 10, status: "Severe AKI" },
   { date: "Feb 2025", value: 40, status: "G3b CKD" },
   { date: "May 2025", value: 39, status: "G3b CKD" },
+  { date: "Jul 2025", value: 38.74, status: "G3b CKD" },
   { date: "Aug 2025", value: 43, status: "G3b CKD" },
+  { date: "Sep 2025", value: 40.26, status: "G3b CKD" },
+  { date: "Oct 2025", value: 41.62, status: "G3b CKD" },
+  { date: "Nov 2025", value: 48.12, status: "G3a improving" },
+  { date: "Dec 2025", value: 51.67, status: "G3a improving" },
+  { date: "Jan 2026", value: 51.22, status: "G3a" },
+  { date: "Feb 2026", value: 44.57, status: "G3b decline" },
+  { date: "Mar 2026", value: 45.21, status: "G3a/b border" },
   { date: "Apr 2026", value: 40, status: "G3b CKD" },
 ]
 
@@ -61,8 +70,46 @@ const hemoglobinData = [
   { date: "Dec 2023", value: 10.4 },
   { date: "Feb 2025", value: 10.6 },
   { date: "May 2025", value: 11.9 },
-  { date: "Aug 2025", value: 11.2 },
+  { date: "Jul 2025", value: 12.2 },
+  { date: "Aug 2025", value: 11.1 },
+  { date: "Sep 2025", value: 11.4 },
+  { date: "Oct 2025", value: 11.3 },
+  { date: "Nov 2025", value: 12.5 },
+  { date: "Dec 2025", value: 12.2 },
+  { date: "Jan 2026", value: 11.8 },
+  { date: "Feb 2026", value: 12.0 },
+  { date: "Mar 2026", value: 12.6 },
   { date: "Apr 2026", value: 12.4 },
+]
+
+const ancData = [
+  { date: "Feb 2025", value: 1.73 },
+  { date: "May 2025", value: 1.63 },
+  { date: "Jul 2025", value: 1.69 },
+  { date: "Aug 2025", value: 1.48 },
+  { date: "Sep 2025", value: 1.60 },
+  { date: "Oct 2025", value: 1.56 },
+  { date: "Nov 2025", value: 2.80 },
+  { date: "Dec 2025", value: 2.21 },
+  { date: "Jan 2026", value: 1.42 },
+  { date: "Feb 2026", value: 1.33 },
+  { date: "Mar 2026", value: 1.10 },
+  { date: "Apr 2026", value: 1.45 },
+]
+
+const plateletData = [
+  { date: "Feb 2025", value: 167 },
+  { date: "May 2025", value: 102 },
+  { date: "Jul 2025", value: 195 },
+  { date: "Aug 2025", value: 141 },
+  { date: "Sep 2025", value: 200 },
+  { date: "Oct 2025", value: 131 },
+  { date: "Nov 2025", value: 236 },
+  { date: "Dec 2025", value: 243 },
+  { date: "Jan 2026", value: 178 },
+  { date: "Feb 2026", value: 149 },
+  { date: "Mar 2026", value: 123 },
+  { date: "Apr 2026", value: 110 },
 ]
 
 export default function MedicalHistory() {
@@ -361,6 +408,109 @@ export default function MedicalHistory() {
                   </div>
                 </TimelineEvent>
 
+                {/* August 2025 */}
+                <TimelineEvent 
+                  date="August 2025" 
+                  title="Comprehensive Myeloma Panel (Dr. Lal PathLabs)"
+                  color="blue"
+                >
+                  <div className="text-sm text-slate-600 space-y-2">
+                    <p><strong>Key findings:</strong></p>
+                    <ul className="list-disc list-inside space-y-1">
+                      <li>Beta-2 Microglobulin: <strong>10,244 ng/mL</strong> (ISS Stage III)</li>
+                      <li>Kappa FLC: 38.71 mg/L (2x ULN)</li>
+                      <li>IgG: <strong>515 mg/dL</strong> (below normal)</li>
+                      <li>IgM: &lt;21 mg/dL (critically low)</li>
+                      <li>eGFR: 43 mL/min (G3b CKD)</li>
+                      <li>ANC: 1.48 (neutropenia)</li>
+                    </ul>
+                  </div>
+                </TimelineEvent>
+
+                {/* Jul-Dec 2025 Serial Monitoring */}
+                <TimelineEvent 
+                  date="July – December 2025" 
+                  title="Serial KFT + CBC Monitoring (Max Lab)"
+                  color="blue"
+                >
+                  <div className="text-sm text-slate-600 space-y-2">
+                    <div className="bg-green-50 border border-green-200 rounded p-3">
+                      <p className="font-medium text-green-800">Positive trend:</p>
+                      <ul className="list-disc list-inside mt-1 text-green-700">
+                        <li>Creatinine declining: 1.86 → 1.46 mg/dL</li>
+                        <li>eGFR improving: 38.74 → 51.67 (CKD-EPI)</li>
+                      </ul>
+                    </div>
+                    <div className="bg-red-50 border border-red-200 rounded p-3">
+                      <p className="font-medium text-red-800">Concerns:</p>
+                      <ul className="list-disc list-inside mt-1 text-red-700">
+                        <li>Potassium rising: 4.91 → <strong>6.25 mmol/L (CRITICAL)</strong></li>
+                        <li>ANC persistently neutropenic (1.48–1.69)</li>
+                      </ul>
+                    </div>
+                  </div>
+                </TimelineEvent>
+
+                {/* December 2025 */}
+                <TimelineEvent 
+                  date="December 2025" 
+                  title="Myeloma Panel — FLC + SPE (Max Lab)"
+                  color="blue"
+                >
+                  <ul className="list-disc list-inside text-sm text-slate-600 space-y-1">
+                    <li>Kappa FLC: 37.53 mg/L (~2x ULN)</li>
+                    <li>K/L Ratio: 2.21</li>
+                    <li>M-Spike: 0.11 g/dL (present in gamma region)</li>
+                    <li>Hypogammaglobulinemia present</li>
+                  </ul>
+                </TimelineEvent>
+
+                {/* Jan-Mar 2026 Serial Monitoring */}
+                <TimelineEvent 
+                  date="January – March 2026" 
+                  title="Serial KFT + CBC Monitoring (Max Lab)"
+                  color="orange"
+                >
+                  <div className="text-sm text-slate-600 space-y-2">
+                    <div className="bg-amber-50 border border-amber-200 rounded p-3">
+                      <p className="font-medium text-amber-800">eGFR fluctuating:</p>
+                      <p className="text-amber-700">51.22 (Jan) → 44.57 (Feb) → 45.21 (Mar) — returned toward G3b</p>
+                    </div>
+                    <div className="bg-red-50 border border-red-200 rounded p-3">
+                      <p className="font-medium text-red-800">Worsening trends:</p>
+                      <ul className="list-disc list-inside mt-1 text-red-700">
+                        <li>ANC declining: 1.42 → 1.33 → <strong>1.10</strong> (approaching grade 3)</li>
+                        <li>Platelets declining: 178 → 149 → 123</li>
+                        <li>Potassium persistently elevated: 5.69–5.80 mmol/L</li>
+                      </ul>
+                    </div>
+                  </div>
+                </TimelineEvent>
+
+                {/* March 2026 PET-CT */}
+                <TimelineEvent 
+                  date="March 2026" 
+                  title="Whole Body PET-CT Scan (Max Healthcare)"
+                  color="green"
+                >
+                  <div className="text-sm text-slate-600 space-y-2">
+                    <p className="font-medium">Comparison vs Feb 2024:</p>
+                    <div className="bg-green-50 border border-green-200 rounded p-3">
+                      <p className="font-medium text-green-800">Favourable findings:</p>
+                      <ul className="list-disc list-inside mt-1 text-green-700">
+                        <li>D5–D7 paravertebral soft tissue: SUVmax 5.8 → 4.9, size decreased</li>
+                        <li>Right 6th rib: Resolution of FDG avidity</li>
+                        <li>Left 8th rib: Resolution of FDG avidity</li>
+                      </ul>
+                    </div>
+                    <div className="bg-amber-50 border border-amber-200 rounded p-3">
+                      <p className="font-medium text-amber-800">Residual disease:</p>
+                      <p className="text-amber-700">Non-FDG avid lytic lesions persist across sternum, vertebrae, ribs, sacrum, pelvic bones</p>
+                    </div>
+                    <p className="text-xs text-slate-500 italic">Overall: Favourable structural response to maintenance, contrasting with rising biochemical markers</p>
+                  </div>
+                </TimelineEvent>
+
                 {/* April 2026 */}
                 <TimelineEvent 
                   date="April 2026" 
@@ -371,10 +521,36 @@ export default function MedicalHistory() {
                     <li>Kappa FLC: <strong>97.65 mg/L</strong> (highest since Jan 2024 relapse)</li>
                     <li>K/L ratio: <strong>4.367</strong></li>
                     <li>eGFR: <strong>40</strong> (CKD G3b)</li>
-                    <li>MRD: <strong>0.0017% POSITIVE</strong></li>
-                    <li>BM Plasma Cells: <strong>2%</strong></li>
-                    <li>Disease progressing on current maintenance</li>
+                    <li>Calcium: 10.40 mg/dL (high)</li>
+                    <li>Potassium: 5.54 mEq/L (high)</li>
+                    <li>ANC: 1.45 (neutropenia)</li>
+                    <li>Platelets: 110 (thrombocytopenia)</li>
                   </ul>
+                </TimelineEvent>
+
+                {/* April-May 2026 Bone Marrow */}
+                <TimelineEvent 
+                  date="April–May 2026" 
+                  title="Bone Marrow + Flow Cytometry MRD (PGIMER)"
+                  color="red"
+                >
+                  <div className="text-sm text-slate-600 space-y-2">
+                    <p><strong>Bone Marrow Aspiration (24 Apr):</strong></p>
+                    <ul className="list-disc list-inside space-y-1">
+                      <li>Plasma cells: <strong>2%</strong> (right imprint 3%, left 1%)</li>
+                      <li>Cellularity: 30–40%</li>
+                      <li>Trephine: No interstitial increase in plasma cells</li>
+                    </ul>
+                    <div className="bg-red-50 border border-red-200 rounded p-3 mt-2">
+                      <p className="font-medium text-red-800">Flow Cytometry MRD (25 Apr):</p>
+                      <ul className="list-disc list-inside mt-1 text-red-700">
+                        <li>MRD: <strong>POSITIVE (0.0017%)</strong></li>
+                        <li>Events acquired: 2.9 million</li>
+                        <li>Immunophenotype: CD38+, CD56+, CD117+, cytoKappa+</li>
+                      </ul>
+                    </div>
+                    <p className="text-xs text-slate-500 italic mt-2">Disease escaping Daratumumab-pomalidomide maintenance — treatment reassessment warranted</p>
+                  </div>
                 </TimelineEvent>
               </div>
             </CardContent>
@@ -519,16 +695,21 @@ export default function MedicalHistory() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr className="border-b bg-red-50"><td className="py-2 px-3 font-medium">Kappa FLC</td><td className="py-2 px-3">97.65 mg/L</td><td className="py-2 px-3">3.30–19.40</td><td className="py-2 px-3 text-red-700">🔴 5× ULN — highest since Jan 2024</td></tr>
-                      <tr className="border-b bg-red-50"><td className="py-2 px-3 font-medium">K/L Ratio</td><td className="py-2 px-3">4.367</td><td className="py-2 px-3">0.26–1.65</td><td className="py-2 px-3 text-red-700">🔴 2.6× ULN</td></tr>
-                      <tr className="border-b bg-red-50"><td className="py-2 px-3 font-medium">MRD</td><td className="py-2 px-3">0.0017%</td><td className="py-2 px-3">Negative</td><td className="py-2 px-3 text-red-700">🔴 Positive</td></tr>
-                      <tr className="border-b bg-red-50"><td className="py-2 px-3 font-medium">BM Plasma Cells</td><td className="py-2 px-3">2%</td><td className="py-2 px-3">&lt;1% on therapy</td><td className="py-2 px-3 text-red-700">🔴 Residual disease</td></tr>
-                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">eGFR</td><td className="py-2 px-3">40 mL/min</td><td className="py-2 px-3">&gt;59</td><td className="py-2 px-3 text-amber-700">🟠 CKD G3b</td></tr>
-                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">Calcium</td><td className="py-2 px-3">10.40 mg/dL</td><td className="py-2 px-3">8.80–10.20</td><td className="py-2 px-3 text-amber-700">🟠 High</td></tr>
-                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">Potassium</td><td className="py-2 px-3">5.54 mEq/L</td><td className="py-2 px-3">3.50–5.10</td><td className="py-2 px-3 text-amber-700">🟠 High</td></tr>
-                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">ANC</td><td className="py-2 px-3">1.45 ×10³/µL</td><td className="py-2 px-3">2.00–7.00</td><td className="py-2 px-3 text-amber-700">🟠 Neutropenia</td></tr>
-                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">Platelets</td><td className="py-2 px-3">110 ×10³/µL</td><td className="py-2 px-3">150–410</td><td className="py-2 px-3 text-amber-700">🟠 Thrombocytopenia</td></tr>
-                      <tr className="bg-yellow-50"><td className="py-2 px-3">Hemoglobin</td><td className="py-2 px-3">12.40 g/dL</td><td className="py-2 px-3">13.00–17.00</td><td className="py-2 px-3 text-yellow-700">🟡 Mild anemia</td></tr>
+                      <tr className="border-b bg-red-50"><td className="py-2 px-3 font-medium">Kappa FLC</td><td className="py-2 px-3">97.65 mg/L</td><td className="py-2 px-3">3.30–19.40</td><td className="py-2 px-3 text-red-700">5x ULN — highest since Jan 2024</td></tr>
+                      <tr className="border-b bg-red-50"><td className="py-2 px-3 font-medium">K/L Ratio</td><td className="py-2 px-3">4.367</td><td className="py-2 px-3">0.26–1.65</td><td className="py-2 px-3 text-red-700">2.6x ULN</td></tr>
+                      <tr className="border-b bg-red-50"><td className="py-2 px-3 font-medium">MRD</td><td className="py-2 px-3">0.0017%</td><td className="py-2 px-3">Negative</td><td className="py-2 px-3 text-red-700">Positive — residual myeloma</td></tr>
+                      <tr className="border-b bg-red-50"><td className="py-2 px-3 font-medium">BM Plasma Cells</td><td className="py-2 px-3">2%</td><td className="py-2 px-3">&lt;1% on therapy</td><td className="py-2 px-3 text-red-700">Residual disease</td></tr>
+                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">eGFR</td><td className="py-2 px-3">40 mL/min</td><td className="py-2 px-3">&gt;59</td><td className="py-2 px-3 text-amber-700">CKD G3b</td></tr>
+                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">Creatinine</td><td className="py-2 px-3">1.81 mg/dL</td><td className="py-2 px-3">0.70–1.30</td><td className="py-2 px-3 text-amber-700">High</td></tr>
+                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">Calcium</td><td className="py-2 px-3">10.40 mg/dL</td><td className="py-2 px-3">8.80–10.20</td><td className="py-2 px-3 text-amber-700">High (rechecked)</td></tr>
+                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">Potassium</td><td className="py-2 px-3">5.54 mEq/L</td><td className="py-2 px-3">3.50–5.10</td><td className="py-2 px-3 text-amber-700">High (rechecked)</td></tr>
+                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">Phosphorus</td><td className="py-2 px-3">4.20 mg/dL</td><td className="py-2 px-3">2.30–3.70</td><td className="py-2 px-3 text-amber-700">High</td></tr>
+                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">ANC</td><td className="py-2 px-3">1.45 x10³/uL</td><td className="py-2 px-3">2.00–7.00</td><td className="py-2 px-3 text-amber-700">Neutropenia</td></tr>
+                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">Platelets</td><td className="py-2 px-3">110 x10³/uL</td><td className="py-2 px-3">150–410</td><td className="py-2 px-3 text-amber-700">Thrombocytopenia</td></tr>
+                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">IgM</td><td className="py-2 px-3">&lt;21 mg/dL</td><td className="py-2 px-3">50–300</td><td className="py-2 px-3 text-amber-700">Very low (immunosuppressed)</td></tr>
+                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">TLC</td><td className="py-2 px-3">3.60 thou/mm³</td><td className="py-2 px-3">4.00–10.00</td><td className="py-2 px-3 text-amber-700">Leukopenia</td></tr>
+                      <tr className="border-b bg-yellow-50"><td className="py-2 px-3">Hemoglobin</td><td className="py-2 px-3">12.40 g/dL</td><td className="py-2 px-3">13.00–17.00</td><td className="py-2 px-3 text-yellow-700">Mild anemia</td></tr>
+                      <tr className="bg-yellow-50"><td className="py-2 px-3">IgG</td><td className="py-2 px-3">752 mg/dL</td><td className="py-2 px-3">650–1600</td><td className="py-2 px-3 text-yellow-700">Low-normal (recovering)</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -538,29 +719,32 @@ export default function MedicalHistory() {
               <div>
                 <h3 className="font-semibold text-slate-900 mb-3">Concern List</h3>
                 <div className="space-y-3">
-                  <ConcernItem number={1} severity="critical" title="Active Multiple Myeloma (Relapsed/Refractory)">
-                    Kappa FLC 97.65 mg/L (highest since relapse Jan 2024), IgG-Kappa M-spike ~0.2 g/dL, MRD 0.0017% positive, BM 2% plasma cells. Disease progressing on Daratumumab-pomalidomide maintenance.
+                  <ConcernItem number={1} severity="critical" title="Active Multiple Myeloma (Escaping Maintenance)">
+                    Kappa FLC 97.65 mg/L (highest since Jan 2024 relapse), IgG-Kappa M-spike ~0.2 g/dL, MRD 0.0017% positive, 2% plasma cells by aspirate. Kappa FLC surged from ~37 mg/L (Dec 2025) to 97.65 (Apr 2026) in 4 months. Disease escaping Daratumumab-pomalidomide maintenance — urgent treatment reassessment warranted.
                   </ConcernItem>
-                  <ConcernItem number={2} severity="high" title="CKD Stage G3b (eGFR 40)">
-                    Persistent since Sep 2024 carfilzomib-induced TMA/AKI. Elevated creatinine, high phosphorus, hypercalcemia indicate ongoing renal-metabolic burden. Limits treatment options.
+                  <ConcernItem number={2} severity="high" title="Fluctuating but Persistently Impaired Renal Function (CKD G3a–G3b)">
+                    eGFR improved temporarily Nov–Jan 2026 (51.67) before declining again to ~45 (Mar) and 40 (Apr 2026). Creatinine 1.63–1.81 range. Potassium persistently elevated (5.49–6.25 mmol/L; Dec 2025 flagged critical). Phosphorus elevated. All limit treatment options, especially nephrotoxic agents.
                   </ConcernItem>
-                  <ConcernItem number={3} severity="high" title="Electrolyte Abnormalities">
-                    Potassium 5.54 mEq/L (borderline hyperkalemia), Calcium 10.40 mg/dL (may reflect MM-related bone disease or renal handling issues).
+                  <ConcernItem number={3} severity="high" title="Progressive Thrombocytopenia (2026 trend)">
+                    Platelets declining from 243 (Dec 2025) → 178 (Jan) → 149 (Feb) → 123 (Mar) → 110 (Apr 2026). Giant platelets noted. This 4-month downward trend is concerning for increasing marrow infiltration or drug toxicity.
                   </ConcernItem>
-                  <ConcernItem number={4} severity="high" title="Persistent Absolute Neutropenia">
-                    ANC 1.45 ×10³/µL across multiple readings. Elevated infection risk. Likely treatment-related + marrow suppression.
+                  <ConcernItem number={4} severity="high" title="Worsening Absolute Neutropenia (2026 trend)">
+                    ANC fell from 1.42 (Jan) → 1.33 (Feb) → 1.10 (Mar 2026) — approaching grade 3 neutropenia. Persistent across most of 2025–2026 monitoring with only brief recovery (2.21–2.80) in Nov–Dec 2025. Major infection risk; Pomalidomide dose review needed.
                   </ConcernItem>
-                  <ConcernItem number={5} severity="moderate" title="Thrombocytopenia">
-                    Platelets 110 ×10³/µL with giant platelets noted. Monitor for bleeding risk.
+                  <ConcernItem number={5} severity="high" title="Hypogammaglobulinemia">
+                    IgM &lt;21 mg/dL consistently since at least Dec 2024. IgG below normal in Aug 2025 (515 mg/dL), partially recovered to 752 by Apr 2026 (still lower range). Risk of bacterial/encapsulated organism infections. IVIG prophylaxis may need to be considered.
                   </ConcernItem>
-                  <ConcernItem number={6} severity="high" title="Hypogammaglobulinemia">
-                    IgM &lt;21 mg/dL consistently (ref 50–300). Risk of bacterial infections. IgG recovering slightly to 752 mg/dL.
+                  <ConcernItem number={6} severity="high" title="Beta-2 Microglobulin (ISS Stage III)">
+                    Last measured 10,244 ng/mL (Aug 2025) = ISS Stage III (&gt;5500). Not repeated since. Reflects combined disease burden + renal impairment. Repeat testing needed.
                   </ConcernItem>
-                  <ConcernItem number={7} severity="high" title="Beta-2 Microglobulin">
-                    Last measured at 10,244 ng/mL (Aug 2025). Not yet repeated. Critical prognostic concern.
+                  <ConcernItem number={7} severity="moderate" title="Electrolyte/Metabolic Concerns">
+                    Persistent hyperkalemia (5.49–6.25 mmol/L; Dec 2025 critical), elevated calcium (10.09 Mar 2026, 10.40 Apr 2026), elevated phosphorus (4.20 Apr 2026), elevated uric acid. Pattern consistent with renal handling dysfunction + MM-related bone disease.
                   </ConcernItem>
-                  <ConcernItem number={8} severity="critical" title="Treatment Efficacy Concern">
-                    Steep rise in Kappa FLC from ~38–48 mg/L (2025) to 97.65 mg/L (Apr 2026) suggests disease escape from current maintenance. Treatment change discussion warranted.
+                  <ConcernItem number={8} severity="moderate" title="Skeletal Disease — Partial Response (PET-CT Mar 2026)">
+                    D5–D7 paravertebral soft tissue lesion reduced (SUVmax 5.8 → 4.9). Rib fractures healed. Non-FDG avid lytic lesions persist across sternum, vertebrae, ribs, sacrum, pelvic bones. Favourable structural response contrasting with rising biochemical markers.
+                  </ConcernItem>
+                  <ConcernItem number={9} severity="moderate" title="Progressive Anaemia">
+                    Hb consistently below normal (11.0–12.6 g/dL) throughout 2025–2026. RDW persistently elevated (15.6–16.8%) indicating anisocytosis. Mentzer index &gt;29 (IDA pattern). Multifactorial: chronic disease, marrow suppression, possible iron deficiency.
                   </ConcernItem>
                 </div>
               </div>
@@ -718,6 +902,81 @@ export default function MedicalHistory() {
                       />
                       <ReferenceLine y={13} stroke="#22c55e" strokeDasharray="5 5" label={{ value: 'Lower Normal (13)', fill: '#22c55e', fontSize: 10, position: 'right' }} />
                       <Area type="monotone" dataKey="value" stroke="#ec4899" strokeWidth={2} fill="url(#hgbGradient)" dot={{ fill: '#ec4899', strokeWidth: 2, r: 4 }} />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              {/* ANC Chart */}
+              <div>
+                <h3 className="font-semibold text-slate-900 mb-2">Absolute Neutrophil Count (ANC) Trend</h3>
+                <p className="text-sm text-slate-500 mb-4">Normal range: 2.0–7.0 ×10⁹/L | Neutropenia: &lt;2.0</p>
+                <div className="h-72 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={ancData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+                      <defs>
+                        <linearGradient id="ancGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#f97316" stopOpacity={0.3}/>
+                          <stop offset="95%" stopColor="#f97316" stopOpacity={0}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                      <XAxis 
+                        dataKey="date" 
+                        tick={{ fontSize: 11 }} 
+                        angle={-45} 
+                        textAnchor="end"
+                        height={60}
+                      />
+                      <YAxis 
+                        tick={{ fontSize: 12 }}
+                        domain={[0, 4]}
+                        label={{ value: '×10⁹/L', angle: -90, position: 'insideLeft', fontSize: 12 }}
+                      />
+                      <Tooltip 
+                        contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
+                        formatter={(value: number) => [`${value} ×10⁹/L`, 'ANC']}
+                      />
+                      <ReferenceLine y={2.0} stroke="#22c55e" strokeDasharray="5 5" label={{ value: 'Lower Normal (2.0)', fill: '#22c55e', fontSize: 10, position: 'right' }} />
+                      <ReferenceLine y={1.0} stroke="#ef4444" strokeDasharray="5 5" label={{ value: 'Grade 3 (<1.0)', fill: '#ef4444', fontSize: 10, position: 'right' }} />
+                      <Area type="monotone" dataKey="value" stroke="#f97316" strokeWidth={2} fill="url(#ancGradient)" dot={{ fill: '#f97316', strokeWidth: 2, r: 4 }} />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              {/* Platelet Chart */}
+              <div>
+                <h3 className="font-semibold text-slate-900 mb-2">Platelet Count Trend</h3>
+                <p className="text-sm text-slate-500 mb-4">Normal range: 150–410 ×10⁹/L</p>
+                <div className="h-72 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={plateletData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
+                      <defs>
+                        <linearGradient id="pltGradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#a855f7" stopOpacity={0.3}/>
+                          <stop offset="95%" stopColor="#a855f7" stopOpacity={0}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                      <XAxis 
+                        dataKey="date" 
+                        tick={{ fontSize: 11 }} 
+                        angle={-45} 
+                        textAnchor="end"
+                        height={60}
+                      />
+                      <YAxis 
+                        tick={{ fontSize: 12 }}
+                        domain={[0, 300]}
+                        label={{ value: '×10⁹/L', angle: -90, position: 'insideLeft', fontSize: 12 }}
+                      />
+                      <Tooltip 
+                        contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
+                        formatter={(value: number) => [`${value} ×10⁹/L`, 'Platelets']}
+                      />
+                      <ReferenceLine y={150} stroke="#22c55e" strokeDasharray="5 5" label={{ value: 'Lower Normal (150)', fill: '#22c55e', fontSize: 10, position: 'right' }} />
+                      <Area type="monotone" dataKey="value" stroke="#a855f7" strokeWidth={2} fill="url(#pltGradient)" dot={{ fill: '#a855f7', strokeWidth: 2, r: 4 }} />
                     </AreaChart>
                   </ResponsiveContainer>
                 </div>
