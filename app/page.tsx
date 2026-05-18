@@ -133,7 +133,7 @@ export default function MedicalHistory() {
           >
             <FileText className="w-4 h-4" />
             <span>PDF Reports</span>
-            <span className="bg-white/20 text-xs px-1.5 py-0.5 rounded">7 files</span>
+            <span className="bg-white/20 text-xs px-1.5 py-0.5 rounded">22 files</span>
           </Link>
           
           <div className="w-px h-6 bg-slate-300 mx-1" />

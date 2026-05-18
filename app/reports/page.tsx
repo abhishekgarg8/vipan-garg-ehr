@@ -7,14 +7,32 @@ import { FileText, ArrowLeft, ExternalLink } from "lucide-react"
 
 const reports = [
   // 2026
-  { id: "bone-marrow-may-2026", year: "2026", date: "May", title: "Bone Marrow Biopsy", file: "/reports/bone-marrow-may-2026.pdf" },
+  { id: "2026-apr-latest", year: "2026", date: "April", title: "Latest Myeloma Followup — CBC, Renal, SPEP, IFE, FLC", file: "/reports/2026-apr-latest-myeloma-followup.pdf" },
+  { id: "bone-marrow-may-2026", year: "2026", date: "May", title: "Bone Marrow Biopsy & Flow Cytometry MRD", file: "/reports/bone-marrow-may-2026.pdf" },
   { id: "april-2026-blood", year: "2026", date: "April", title: "Blood Reports (CBC, KFT, Myeloma Panel)", file: "/reports/april-2026-blood-reports.pdf" },
-  { id: "march-2026-pet-ct", year: "2026", date: "March", title: "PET CT Scan", file: "/reports/2026-march-pet-ct.pdf" },
-  { id: "2026-2025-kft-cbc", year: "2026-2025", date: "Multiple", title: "KFT & CBC Trend Reports", file: "/reports/2026-2025-kft-cbc.pdf" },
+  { id: "march-2026-pet-ct", year: "2026", date: "March", title: "PET CT Scan — Whole Body Imaging", file: "/reports/2026-march-pet-ct.pdf" },
+  { id: "2026-2025-kft-cbc", year: "2026-2025", date: "Jan-Apr", title: "Serial KFT & CBC Reports (Jan-Mar 2026)", file: "/reports/2026-2025-kft-cbc.pdf" },
   // 2025
-  { id: "dec-2025-myeloma", year: "2025", date: "December", title: "Myeloma Panel", file: "/reports/2025-december-myeloma-panel.pdf" },
-  { id: "aug-2025-myeloma", year: "2025", date: "August", title: "Myeloma Panel", file: "/reports/2025-august-myeloma-panel.pdf" },
-  { id: "2025-kft-cbc", year: "2025", date: "Jul-Dec", title: "KFT & CBC Reports", file: "/reports/2025-kft-cbc.pdf" },
+  { id: "2025-aug-discharge", year: "2025", date: "August", title: "Discharge Summary — Maintenance Treatment", file: "/reports/2025-aug-discharge-summary.pdf" },
+  { id: "2025-aug-screening", year: "2025", date: "August", title: "Myeloma Screening Panel", file: "/reports/2025-aug-myeloma-screening-panel.pdf" },
+  { id: "dec-2025-myeloma", year: "2025", date: "December", title: "Myeloma Panel (FLC + SPE)", file: "/reports/2025-december-myeloma-panel.pdf" },
+  { id: "aug-2025-myeloma", year: "2025", date: "August", title: "Myeloma Screening Panel", file: "/reports/2025-august-myeloma-panel.pdf" },
+  { id: "2025-feb-mrd", year: "2025", date: "February", title: "Myeloma Panel — MRD Negative", file: "/reports/2025-feb-myeloma-panel-mrd.pdf" },
+  { id: "2025-kft-cbc", year: "2025", date: "Jul-Dec", title: "Serial KFT & CBC Reports (Jul-Dec 2025)", file: "/reports/2025-kft-cbc.pdf" },
+  // 2024
+  { id: "2024-sep-renal", year: "2024", date: "September", title: "Renal Hospitalization — Medanta Files", file: "/reports/2024-sep-renal-hospitalization.pdf" },
+  { id: "2024-nov-aki", year: "2024", date: "November", title: "Myeloma Panel (Post-AKI)", file: "/reports/2024-nov-myeloma-panel-post-aki.pdf" },
+  { id: "2024-nov-biopsy", year: "2024", date: "November", title: "Kidney Biopsy — Carfilzomib TMA", file: "/reports/2024-nov-kidney-biopsy-tma.pdf" },
+  { id: "2024-mar-relapse", year: "2024", date: "March", title: "Myeloma Panel — Relapse Baseline", file: "/reports/2024-mar-myeloma-panel-relapse.pdf" },
+  { id: "2024-feb-bm-mrd", year: "2024", date: "February", title: "Bone Marrow — MRD Positive (Relapse)", file: "/reports/2024-feb-relapse-bone-marrow-mrd.pdf" },
+  { id: "2024-feb-pet-ct", year: "2024", date: "February", title: "PET CT Scan — Relapse Confirmation", file: "/reports/2024-feb-relapse-pet-ct.pdf" },
+  // 2023
+  { id: "2023-aug-maintenance", year: "2023", date: "August", title: "MRD Negative — Maintenance Period", file: "/reports/2023-aug-mrd-negative-maintenance.pdf" },
+  // 2022
+  { id: "2022-sept-response", year: "2022", date: "September", title: "Treatment Response — Myeloma Reports", file: "/reports/2022-sept-treatment-response.pdf" },
+  { id: "2022-dec-remission", year: "2022", date: "December", title: "MRD Negative — Complete Remission", file: "/reports/2022-dec-mrd-negative-remission.pdf" },
+  { id: "2022-dx-imaging", year: "2022", date: "Diagnosis", title: "Diagnosis Imaging — PET CT & MRI (Baseline)", file: "/reports/2022-diagnosis-pet-ct-mri.pdf" },
+  { id: "2022-dx-bm", year: "2022", date: "Diagnosis", title: "Diagnosis Bone Marrow — FISH, SPEP, FLC", file: "/reports/2022-diagnosis-bone-marrow-fish.pdf" },
 ]
 
 export default function ReportsPage() {
@@ -125,7 +143,7 @@ export default function ReportsPage() {
 
       {/* Footer */}
       <footer className="text-center text-sm text-slate-500 py-8 border-t border-slate-200 mt-8">
-        <p>Medical Reports Archive — Last Updated: May 2026</p>
+        <p>Medical Reports Archive — {reports.length} Documents • Last Updated: May 2026</p>
       </footer>
     </div>
   )
