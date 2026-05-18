@@ -35,10 +35,27 @@ const reports = [
   { id: "2022-dx-bm", year: "2022", date: "Diagnosis", title: "Diagnosis Bone Marrow — FISH, SPEP, FLC", file: "/reports/2022-diagnosis-bone-marrow-fish.pdf" },
 ]
 
+const secondaryReports = [
+  // 2025
+  { id: "2025-sep-discharge", year: "2025", date: "September", title: "Discharge Slip & Bill", file: "/reports/2025-sep-discharge-slip-bill.pdf" },
+  { id: "2025-feb-10-lab", year: "2025", date: "February 10", title: "Lab Report", file: "/reports/2025-feb-10-lab-report.pdf" },
+  // 2024
+  { id: "2024-sep-synergy-reports", year: "2024", date: "September", title: "Synergy Reports", file: "/reports/2024-sep-synergy-reports.pdf" },
+  { id: "2024-sep-synergy-discharge", year: "2024", date: "September", title: "Synergy Discharge Summary", file: "/reports/2024-sep-synergy-discharge-summary.pdf" },
+  { id: "2024-apr-pgi-discharge", year: "2024", date: "April", title: "PGI Discharge Summary", file: "/reports/2024-apr-pgi-discharge-summary.pdf" },
+  { id: "2024-apr-amrita-bmt", year: "2024", date: "April", title: "Amrita BMT — Patient Summary", file: "/reports/2024-apr-amrita-bmt-summary.pdf" },
+  { id: "2024-apr-ehr-history", year: "2024", date: "April", title: "EHR History — CAR-T & BMT Context", file: "/reports/2024-apr-ehr-history-car-t-bmt.pdf" },
+  { id: "2024-jan-mm-history", year: "2024", date: "January", title: "MM History — Relapse Marker Context", file: "/reports/2024-jan-mm-history-relapse-context.pdf" },
+  // 2022
+  { id: "2022-aug-myeloma-followup", year: "2022", date: "August", title: "Myeloma Followup — After 5 Weeks Chemo", file: "/reports/2022-aug-myeloma-followup-5weeks.pdf" },
+  { id: "2022-aug-spine-mri", year: "2022", date: "August", title: "Spine MRI Report", file: "/reports/2022-aug-spine-mri-report.pdf" },
+]
+
 export default function ReportsPage() {
   const [selectedReport, setSelectedReport] = useState<string | null>(null)
 
-  const selectedReportData = reports.find((r) => r.id === selectedReport)
+  const allReports = [...reports, ...secondaryReports]
+  const selectedReportData = allReports.find((r) => r.id === selectedReport)
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -77,7 +94,7 @@ export default function ReportsPage() {
 
             <h2 className="text-lg font-semibold text-slate-900 mb-4">Available Reports</h2>
             
-            <ul className="space-y-2">
+            <ul className="space-y-2 mb-8 pb-8 border-b border-slate-200">
               {reports.map((report) => (
                 <li key={report.id}>
                   <button
@@ -93,6 +110,29 @@ export default function ReportsPage() {
                     <span className={selectedReport === report.id ? "text-blue-100" : "text-slate-500"}>{report.date}</span>
                     <span className={selectedReport === report.id ? "text-blue-200" : "text-slate-400"}>•</span>
                     <span className="flex-1">{report.title}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+
+            {/* Secondary Reports */}
+            <h3 className="text-sm font-semibold text-slate-800 mb-4 uppercase tracking-wide text-slate-600">Secondary Reports</h3>
+            <ul className="space-y-2">
+              {secondaryReports.map((report) => (
+                <li key={report.id}>
+                  <button
+                    onClick={() => setSelectedReport(report.id)}
+                    className={`w-full text-left px-3 py-2 rounded-lg transition-all flex items-center gap-2 text-sm ${
+                      selectedReport === report.id
+                        ? "bg-slate-400 text-white"
+                        : "hover:bg-slate-100 text-slate-700"
+                    }`}
+                  >
+                    <span className="font-medium">{report.year}</span>
+                    <span className={selectedReport === report.id ? "text-slate-200" : "text-slate-400"}>•</span>
+                    <span className={selectedReport === report.id ? "text-slate-100" : "text-slate-500"}>{report.date}</span>
+                    <span className={selectedReport === report.id ? "text-slate-200" : "text-slate-400"}>•</span>
+                    <span className="flex-1 text-xs">{report.title}</span>
                   </button>
                 </li>
               ))}
@@ -143,7 +183,7 @@ export default function ReportsPage() {
 
       {/* Footer */}
       <footer className="text-center text-sm text-slate-500 py-8 border-t border-slate-200 mt-8">
-        <p>Medical Reports Archive — {reports.length} Documents • Last Updated: May 2026</p>
+        <p>Medical Reports Archive — {reports.length} Primary + {secondaryReports.length} Secondary Documents • Last Updated: May 2026</p>
       </footer>
     </div>
   )
