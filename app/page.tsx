@@ -125,17 +125,25 @@ export default function MedicalHistory() {
 
       {/* Navigation */}
       <nav className="bg-white border-b border-slate-200 py-3 px-4 sticky top-[88px] z-40">
-        <div className="max-w-5xl mx-auto flex flex-wrap gap-2">
+        <div className="max-w-5xl mx-auto flex flex-wrap gap-2 items-center">
+          {/* Reports Tab - Highlighted First */}
+          <Link 
+            href="/reports" 
+            className="text-sm px-4 py-2 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white transition-all shadow-md hover:shadow-lg flex items-center gap-2 font-medium"
+          >
+            <FileText className="w-4 h-4" />
+            <span>PDF Reports</span>
+            <span className="bg-white/20 text-xs px-1.5 py-0.5 rounded">22 files</span>
+          </Link>
+          
+          <div className="w-px h-6 bg-slate-300 mx-1" />
+          
           <a href="#profile" className="text-sm px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">Profile</a>
           <a href="#timeline" className="text-sm px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">Timeline</a>
           <a href="#treatment" className="text-sm px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">Treatment</a>
           <a href="#markers" className="text-sm px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">Markers</a>
           <a href="#concerns" className="text-sm px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">Concerns</a>
           <a href="#charts" className="text-sm px-3 py-1 rounded-full bg-blue-100 hover:bg-blue-200 text-blue-700 transition-colors">Charts</a>
-          <Link href="/reports" className="text-sm px-3 py-1 rounded-full bg-slate-900 hover:bg-slate-800 text-white transition-colors flex items-center gap-1">
-            <FileText className="w-3.5 h-3.5" />
-            Reports
-          </Link>
         </div>
       </nav>
 
