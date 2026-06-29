@@ -118,8 +118,8 @@ export default function MedicalHistory() {
       {/* Header */}
       <header className="bg-slate-900 text-white py-8 px-4 sticky top-0 z-50">
         <div className="max-w-5xl mx-auto">
-          <h1 className="text-3xl font-bold">Master Medical History</h1>
-          <p className="text-slate-300 mt-1">Vipan Garg — Multiple Myeloma Complete Record (2022–2026)</p>
+          <h1 className="text-3xl font-bold">Vipan Kumar Garg - Medical History</h1>
+          <p className="text-slate-300 mt-1">Multiple Myeloma Patient - 2022 onwards</p>
         </div>
       </header>
 
