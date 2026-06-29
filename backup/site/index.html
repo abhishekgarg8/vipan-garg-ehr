@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vipan Kumar Garg - Myeloma History</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="snapshot" aria-label="Clinical snapshot">
+      <div class="snapshot__main">
+        <p class="eyebrow">Doctor summary · records through April 15, 2026</p>
+        <h1>Vipan Kumar Garg</h1>
+        <p class="snapshot__sub">
+          <span id="patient-alias"></span>
+          <span id="patient-age"></span>
+          <span id="patient-diagnosis"></span>
+        </p>
+      </div>
+      <div class="snapshot__status">
+        <p class="status-label">Current status</p>
+        <p id="patient-status"></p>
+      </div>
+      <div id="latest-labs" class="latest-labs" aria-label="Latest key labs"></div>
+    </header>
+
+    <nav class="tabs" aria-label="Record sections">
+      <button class="tab is-active" type="button" data-tab="overview" aria-controls="overview" aria-selected="true">Overview</button>
+      <button class="tab" type="button" data-tab="timeline" aria-controls="timeline" aria-selected="false">Timeline</button>
+      <button class="tab" type="button" data-tab="markers" aria-controls="markers" aria-selected="false">Markers</button>
+      <button class="tab" type="button" data-tab="findings" aria-controls="findings" aria-selected="false">Findings</button>
+    </nav>
+
+    <main>
+      <section id="overview" class="panel is-active" tabindex="0" aria-labelledby="overview-tab">
+        <div class="section-heading">
+          <p class="eyebrow">Fast read</p>
+          <h2>Clinical Overview</h2>
+        </div>
+        <div class="overview-grid">
+          <section class="block">
+            <h3>Case Summary</h3>
+            <div id="summary-list" class="prose-list"></div>
+          </section>
+          <section class="block">
+            <h3>Active Concerns</h3>
+            <div id="concerns-list" class="concern-list"></div>
+          </section>
+        </div>
+        <section class="block">
+          <h3>Treatment History</h3>
+          <div class="table-wrap">
+            <table class="compact-table">
+              <thead>
+                <tr>
+                  <th>Period</th>
+                  <th>Regimen / Event</th>
+                  <th>Outcome</th>
+                </tr>
+              </thead>
+              <tbody id="treatment-table"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section id="timeline" class="panel" tabindex="0" aria-labelledby="timeline-tab" hidden>
+        <div class="section-heading">
+          <p class="eyebrow">April 2022 to April 2026</p>
+          <h2>Chronological Timeline</h2>
+        </div>
+        <div id="timeline-list" class="timeline-list"></div>
+      </section>
+
+      <section id="markers" class="panel" tabindex="0" aria-labelledby="markers-tab" hidden>
+        <div class="section-heading">
+          <p class="eyebrow">Key longitudinal markers</p>
+          <h2>Markers</h2>
+        </div>
+        <div class="chart-grid">
+          <section class="chart-panel">
+            <div class="chart-title">
+              <h3>Disease Burden</h3>
+              <p>Kappa FLC and K/L ratio</p>
+            </div>
+            <div class="chart-box"><canvas id="chart-disease"></canvas></div>
+          </section>
+          <section class="chart-panel">
+            <div class="chart-title">
+              <h3>Monoclonal Protein</h3>
+              <p>M-spike, IgG, beta-2 microglobulin</p>
+            </div>
+            <div class="chart-box"><canvas id="chart-monoclonal"></canvas></div>
+          </section>
+          <section class="chart-panel">
+            <div class="chart-title">
+              <h3>Renal Function</h3>
+              <p>Creatinine and eGFR</p>
+            </div>
+            <div class="chart-box"><canvas id="chart-renal"></canvas></div>
+          </section>
+          <section class="chart-panel">
+            <div class="chart-title">
+              <h3>Counts / Metabolic Risk</h3>
+              <p>Hemoglobin, platelets, ANC, calcium</p>
+            </div>
+            <div class="chart-box"><canvas id="chart-counts"></canvas></div>
+          </section>
+        </div>
+        <section class="block">
+          <div class="table-heading">
+            <div>
+              <p class="eyebrow">Source values</p>
+              <h3>Key Marker Table</h3>
+            </div>
+            <p>Missing values are shown as "—". Unquantified "faint band" results are not plotted.</p>
+          </div>
+          <div class="table-wrap marker-table-wrap">
+            <table class="marker-table">
+              <thead>
+                <tr>
+                  <th class="sticky-col">Date</th>
+                  <th class="sticky-col sticky-col--phase">Phase</th>
+                  <th>Kappa mg/L</th>
+                  <th>Lambda mg/L</th>
+                  <th>Ratio</th>
+                  <th>M-spike g/dL</th>
+                  <th>IgG mg/dL</th>
+                  <th>B2M ng/mL</th>
+                  <th>Creatinine mg/dL</th>
+                  <th>eGFR</th>
+                  <th>Hgb g/dL</th>
+                  <th>Platelets x10^3/uL</th>
+                  <th>ANC x10^3/uL</th>
+                  <th>Calcium mg/dL</th>
+                  <th>Potassium mEq/L</th>
+                  <th>Clinical note</th>
+                </tr>
+              </thead>
+              <tbody id="marker-table"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section id="findings" class="panel" tabindex="0" aria-labelledby="findings-tab" hidden>
+        <div class="section-heading">
+          <p class="eyebrow">Factual record summary</p>
+          <h2>Findings</h2>
+        </div>
+        <div id="findings-list" class="findings-list"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Prepared from local record summaries. This is an organization aid for physician review, not medical advice.</p>
+    </footer>
+
+    <script src="vendor/chart.umd.min.js"></script>
+    <script src="vendor/chartjs-plugin-annotation.min.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
