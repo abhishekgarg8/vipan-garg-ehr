@@ -7,6 +7,7 @@ import { FileText, ArrowLeft, ExternalLink } from "lucide-react"
 
 const reports = [
   // 2026
+  { id: "2026-june-pre-teclista", year: "2026", date: "June", title: "Pre-Teclista Workup", file: "/reports/2026-june-pre-teclista-workup.pdf" },
   { id: "2026-apr-latest", year: "2026", date: "April", title: "Latest Myeloma Followup — CBC, Renal, SPEP, IFE, FLC", file: "/reports/2026-apr-latest-myeloma-followup.pdf" },
   { id: "bone-marrow-may-2026", year: "2026", date: "May", title: "Bone Marrow Biopsy & Flow Cytometry MRD", file: "/reports/bone-marrow-may-2026.pdf" },
   { id: "april-2026-blood", year: "2026", date: "April", title: "Blood Reports (CBC, KFT, Myeloma Panel)", file: "/reports/april-2026-blood-reports.pdf" },
@@ -183,7 +184,7 @@ export default function ReportsPage() {
 
       {/* Footer */}
       <footer className="text-center text-sm text-slate-500 py-8 border-t border-slate-200 mt-8">
-        <p>Medical Reports Archive — {reports.length} Primary + {secondaryReports.length} Secondary Documents • Last Updated: May 2026</p>
+        <p>Medical Reports Archive — {reports.length} Primary + {secondaryReports.length} Secondary Documents • Last Updated: June 2026</p>
       </footer>
     </div>
   )
