@@ -8,6 +8,7 @@ import { FileText, ArrowLeft, ExternalLink } from "lucide-react"
 const reports = [
   // 2026
   { id: "2026-june-pre-teclista", year: "2026", date: "June", title: "Pre-Teclista Workup", file: "/reports/2026-june-pre-teclista-workup.pdf" },
+  { id: "2026-june-pgi-reports", year: "2026", date: "June", title: "PGI Reports", file: "/reports/2026-june-pgi-reports.pdf" },
   { id: "2026-apr-latest", year: "2026", date: "April", title: "Latest Myeloma Followup — CBC, Renal, SPEP, IFE, FLC", file: "/reports/2026-apr-latest-myeloma-followup.pdf" },
   { id: "bone-marrow-may-2026", year: "2026", date: "May", title: "Bone Marrow Biopsy & Flow Cytometry MRD", file: "/reports/bone-marrow-may-2026.pdf" },
   { id: "april-2026-blood", year: "2026", date: "April", title: "Blood Reports (CBC, KFT, Myeloma Panel)", file: "/reports/april-2026-blood-reports.pdf" },
