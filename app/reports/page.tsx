@@ -7,6 +7,8 @@ import { FileText, ArrowLeft, ExternalLink } from "lucide-react"
 
 const reports = [
   // 2026
+  { id: "2026-october-myeloma-final", year: "2026", date: "October", title: "Myeloma Follow-up - Final Report (5 October)", file: "/reports/2026-october-myeloma-final-report.pdf" },
+  { id: "2026-july-pgi-discharge", year: "2026", date: "July", title: "PGI Discharge Summary - Teclistamab Initiation", file: "/reports/2026-july-pgi-discharge-summary.pdf" },
   { id: "2026-june-pre-teclista", year: "2026", date: "June", title: "Pre-Teclista Workup", file: "/reports/2026-june-pre-teclista-workup.pdf" },
   { id: "2026-june-pgi-reports", year: "2026", date: "June", title: "PGI Reports", file: "/reports/2026-june-pgi-reports.pdf" },
   { id: "2026-apr-latest", year: "2026", date: "April", title: "Latest Myeloma Followup — CBC, Renal, SPEP, IFE, FLC", file: "/reports/2026-apr-latest-myeloma-followup.pdf" },
@@ -185,7 +187,7 @@ export default function ReportsPage() {
 
       {/* Footer */}
       <footer className="text-center text-sm text-slate-500 py-8 border-t border-slate-200 mt-8">
-        <p>Medical Reports Archive — {reports.length} Primary + {secondaryReports.length} Secondary Documents • Last Updated: June 2026</p>
+        <p>Medical Reports Archive — {reports.length} Primary + {secondaryReports.length} Secondary Documents • Last Updated: October 2026</p>
       </footer>
     </div>
   )
