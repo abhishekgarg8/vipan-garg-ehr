@@ -1,0 +1,178 @@
+[
+  {
+    "source": "vipan garg myeloma report May 2026.pdf",
+    "sourceSha256": "5a7d4ea2e0d5bd9793c7c178ffed2ef3f0c97f218d88c69002c3ab5361f02318",
+    "file": "/reports/2026-may-myeloma-final-report.pdf",
+    "sha256": "5a7d4ea2e0d5bd9793c7c178ffed2ef3f0c97f218d88c69002c3ab5361f02318",
+    "pages": 13,
+    "transformation": "byte-identical copy"
+  },
+  {
+    "source": "349fb33c-0c27-41f1-9c49-233ef8e8ff3a.pdf",
+    "sourceSha256": "f16a48f85a254ea44741175e659a2314f0beae51e152af16ec0218faedf45482",
+    "file": "/reports/2026-august-myeloma-final-report.pdf",
+    "sha256": "f16a48f85a254ea44741175e659a2314f0beae51e152af16ec0218faedf45482",
+    "pages": 13,
+    "transformation": "byte-identical copy"
+  },
+  {
+    "source": "Papa EHR/Mr Vipin Kumar Garg (1).pdf",
+    "sourceSha256": "c809654d8fefcd5cdb1af6b425baab95eb5be0b2384619d3b0530aa67e1285cf",
+    "file": "/reports/2024-december-23-nephrology-labs.pdf",
+    "sha256": "c809654d8fefcd5cdb1af6b425baab95eb5be0b2384619d3b0530aa67e1285cf",
+    "pages": 2,
+    "transformation": "byte-identical copy"
+  },
+  {
+    "source": "Papa EHR/Mr Vipin Kumar Garg (2).pdf",
+    "sourceSha256": "40301fd7e431018a3a86d7a0869a0b6bc7e6831d06ec735a5a28a643622ed47d",
+    "file": "/reports/2025-january-23-nephrology-labs.pdf",
+    "sha256": "40301fd7e431018a3a86d7a0869a0b6bc7e6831d06ec735a5a28a643622ed47d",
+    "pages": 3,
+    "transformation": "byte-identical copy"
+  },
+  {
+    "source": "Papa EHR/WhatsApp Document.pdf",
+    "sourceSha256": "d54a7c114571246c5ee0d999595143930255280ddc667888493076f70a7a1af1",
+    "file": "/reports/2025-march-03-max-labs.pdf",
+    "sha256": "d54a7c114571246c5ee0d999595143930255280ddc667888493076f70a7a1af1",
+    "pages": 5,
+    "transformation": "byte-identical copy"
+  },
+  {
+    "source": "Papa EHR/Vipin Kumar Garg (1).pdf",
+    "sourceSha256": "906d5915e0017e37cb66a5e982ab77751bf85ec996d5649552eaeb279253a7ab",
+    "file": "/reports/2025-march-31-nephrology-labs.pdf",
+    "sha256": "906d5915e0017e37cb66a5e982ab77751bf85ec996d5649552eaeb279253a7ab",
+    "pages": 3,
+    "transformation": "byte-identical copy"
+  },
+  {
+    "source": "Papa EHR/Mr. Vipin Kumar Garg.pdf",
+    "sourceSha256": "abe94f1fd322211996018790ee5ef46ca3523b4da8612921899fc4436fec4837",
+    "file": "/reports/2025-april-08-renal-labs.pdf",
+    "sha256": "abe94f1fd322211996018790ee5ef46ca3523b4da8612921899fc4436fec4837",
+    "pages": 3,
+    "transformation": "byte-identical copy"
+  },
+  {
+    "source": "Papa EHR/Mr. Vipin Kumar Garg (1).pdf",
+    "sourceSha256": "66cfbf3b6fa034746dd2703c34cd2cee741f6371bd1179883e6f5632b83aacd9",
+    "file": "/reports/2025-april-29-max-labs.pdf",
+    "sha256": "66cfbf3b6fa034746dd2703c34cd2cee741f6371bd1179883e6f5632b83aacd9",
+    "pages": 5,
+    "transformation": "byte-identical copy"
+  },
+  {
+    "source": "Reading & Research/WhatsApp Report May 21 2025.pdf",
+    "sourceSha256": "3ad40eb38c9be02599d75f09f8410aaec905c7d2af0909083ca6c31f130d7508",
+    "file": "/reports/2025-may-21-kidney-function.pdf",
+    "sha256": "3ad40eb38c9be02599d75f09f8410aaec905c7d2af0909083ca6c31f130d7508",
+    "pages": 2,
+    "transformation": "byte-identical copy"
+  },
+  {
+    "source": "Health Records/20 Aug Lalpath Report.pdf",
+    "sourceSha256": "ac7f81fb05be3805939d4992d999349be66c67b1150afbce8a04386b7d6323ac",
+    "file": "/reports/2025-august-20-liver-function.pdf",
+    "sha256": "ac7f81fb05be3805939d4992d999349be66c67b1150afbce8a04386b7d6323ac",
+    "pages": 2,
+    "transformation": "byte-identical copy"
+  },
+  {
+    "source": "IBKR Papa Account/Mr VIPIN KUMAR GARG.pdf",
+    "sourceSha256": "098056daf8a727134dca8f260c9d858679807a331e4a2ab9404dc890d3b62ec4",
+    "file": "/reports/2025-august-27-kidney-urine-screening.pdf",
+    "sha256": "098056daf8a727134dca8f260c9d858679807a331e4a2ab9404dc890d3b62ec4",
+    "pages": 3,
+    "transformation": "byte-identical copy"
+  },
+  {
+    "source": "IBKR Papa Account/Mr VIPIN KUMAR GARG (1).pdf",
+    "sourceSha256": "aa5d9b4c545e2e4fe88170073e66fe4de3b6f38ee0cee5e6130d3759ab66d359",
+    "file": "/reports/2025-august-27-iron-ferritin.pdf",
+    "sha256": "aa5d9b4c545e2e4fe88170073e66fe4de3b6f38ee0cee5e6130d3759ab66d359",
+    "pages": 2,
+    "transformation": "byte-identical copy"
+  },
+  {
+    "source": "IBKR Papa Account/1Mr VIPIN KUMAR GARG ANTI 1.pdf",
+    "sourceSha256": "075a724fc9384ea6d0f47af780ca8e9434a2614d2ee48687a8a8a0299f20d464",
+    "file": "/reports/2025-august-29-anti-hbs.pdf",
+    "sha256": "075a724fc9384ea6d0f47af780ca8e9434a2614d2ee48687a8a8a0299f20d464",
+    "pages": 1,
+    "transformation": "byte-identical copy"
+  },
+  {
+    "source": "444713279_Report_F_SL_2026-08-01T160203_report.pdf",
+    "sourceSha256": "6468b00480e63c86a1cee1c2f4ca78b8c34cbd3ca44fc5ef955e821d30d87458",
+    "file": "/reports/2026-july-myeloma-final-report.pdf",
+    "sha256": "ac0f5923a9aaf477b109f9f3ae2c81b8871fec12de5294e7b90c0b0927ff03c3",
+    "pages": 13,
+    "transformation": {
+      "operation": "13 lossless page crops at blank gutters"
+    }
+  },
+  {
+    "source": "PGI Reports_merged.pdf",
+    "sourceSha256": "b7226442081bc3707a4710e2d5ffa7bf26b09c62726a36336f6637fc3c2dd63d",
+    "file": "/reports/2026-june-pgi-reports.pdf",
+    "sha256": "0eb438532b5c6b98eab72e232669917725a5fdea812c9bfd25730b1de52cdf8a",
+    "pages": 37,
+    "transformation": {
+      "sourcePages": [
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ]
+    }
+  },
+  {
+    "source": "discharge-summary_organized.pdf",
+    "sourceSha256": "7b314412417126b100d3ff527d0d69f0b180f3c22a1b732c16989a2bca9508ba",
+    "file": "/reports/2026-july-pgi-discharge-original.pdf",
+    "sha256": "03223693536f34d720f9094ce94e27bfb299f28d9f9a2dd262f52e0369f9ce38",
+    "pages": 3,
+    "transformation": {
+      "sourcePages": [
+        1,
+        2,
+        3
+      ]
+    }
+  }
+]

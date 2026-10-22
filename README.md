@@ -24,6 +24,22 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+## Clinical Records and Verification
+
+- `lib/reports.ts` is the shared PDF catalog for the archive and home-page count.
+- `lib/clinical-data.ts` preserves specimen/requisition dates, reported dates, raw values, units, qualifiers, and source-page links. Do not turn reporting limits into numeric measurements or infer missing results.
+- `testing/report-sources.json` records PDF hashes and transformations. The July 2026 panel was paginated without changing its report text; the PGI bundle contains original lab pages only, and the original discharge card contains the three relevant source pages.
+- `testing/prepare-report-assets.py` reproduces the reviewed assets from their original Downloads filenames. It requires Python with `pypdf` and the `pdftotext` command. Do not run it against changed source PDFs without reviewing them again.
+- Raw review files, administrative forms, identity documents, and unrelated Downloads files must not be published.
+
+```bash
+npm test
+npx tsc --noEmit --incremental false
+npm run build
+```
+
+The PDF source tests require Poppler (`pdfinfo` and `pdftotext`). Browser verification evidence is saved in `testing/`. Historical month-only chart summaries are retained as such; new source results use exact documented dates. Current medication use and treatment-response categories are not inferred from laboratory trends.
+
 ## Learn More
 
 To learn more, take a look at the following resources:

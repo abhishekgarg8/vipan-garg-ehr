@@ -12,13 +12,14 @@ import {
   Legend,
   ResponsiveContainer,
   ReferenceLine,
-  AreaChart,
-  Area,
+  type TooltipProps,
 } from "recharts"
 import Link from "next/link"
 import { FileText } from "lucide-react"
+import { allReports } from "@/lib/reports"
+import { chartSeries, chartValue, clinicalLabels, clinicalSources, historicalIgChartValue, historicalIgLimits, latestResults, panelDates, panelResults, resultHref, shortDate, teclistamabRecord, type Analyte, type ClinicalResult } from "@/lib/clinical-data"
 
-// Biomarker data for charts
+// Historical month-level summaries retained; exact specimen dates were not established for these arrays.
 const kappaFLCData = [
   { date: "May 2022", value: 857, event: "Diagnosis" },
   { date: "Jul 2022", value: 16.97, event: "After 4 cycles" },
@@ -116,15 +117,15 @@ export default function MedicalHistory() {
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
-      <header className="bg-slate-900 text-white py-8 px-4 sticky top-0 z-50">
+      <header className="bg-slate-900 text-white py-8 px-4">
         <div className="max-w-5xl mx-auto">
-          <h1 className="text-3xl font-bold">Vipan Kumar Garg - Medical History</h1>
-          <p className="text-slate-300 mt-1">Multiple Myeloma Patient - 2022 onwards</p>
+          <h1 className="text-2xl sm:text-3xl font-bold">Vipan Kumar Garg - Medical History</h1>
+          <p className="text-slate-300 mt-1">Multiple Myeloma Patient - records through 5 October 2026</p>
         </div>
       </header>
 
       {/* Navigation */}
-      <nav className="bg-white border-b border-slate-200 py-3 px-4 sticky top-[88px] z-40">
+      <nav className="bg-white border-b border-slate-200 py-3 px-4 sticky top-0 z-40">
         <div className="max-w-5xl mx-auto flex flex-wrap gap-2 items-center">
           {/* Reports Tab - Highlighted First */}
           <Link 
@@ -133,7 +134,7 @@ export default function MedicalHistory() {
           >
             <FileText className="w-4 h-4" />
             <span>PDF Reports</span>
-            <span className="bg-white/20 text-xs px-1.5 py-0.5 rounded">22 files</span>
+            <span className="bg-white/20 text-xs px-1.5 py-0.5 rounded">{allReports.length} files</span>
           </Link>
           
           <div className="w-px h-6 bg-slate-300 mx-1" />
@@ -147,7 +148,7 @@ export default function MedicalHistory() {
         </div>
       </nav>
 
-      <main className="max-w-5xl mx-auto px-4 py-8 space-y-8">
+      <main className="max-w-5xl mx-auto px-4 py-8 space-y-8 [&_section]:scroll-mt-44 sm:[&_section]:scroll-mt-24 [&_td]:align-top [&_td]:break-words">
         {/* Section 1: Patient Profile */}
         <section id="profile">
           <Card>
@@ -164,7 +165,7 @@ export default function MedicalHistory() {
                   <table className="w-full text-sm">
                     <tbody>
                       <tr className="border-b"><td className="py-2 text-slate-500">Name</td><td className="py-2 font-medium">Vipan Kumar Garg (= Vipin Kumar Garg)</td></tr>
-                      <tr className="border-b"><td className="py-2 text-slate-500">Age at diagnosis</td><td className="py-2 font-medium">~66 years</td></tr>
+                      <tr className="border-b"><td className="py-2 text-slate-500">Age (2 Oct 2026 report)</td><td className="py-2 font-medium"><a className="text-blue-700 underline" href={clinicalSources.october.href + "#page=1"}>69 years</a></td></tr>
                       <tr className="border-b"><td className="py-2 text-slate-500">Height / Weight</td><td className="py-2 font-medium">5&apos;11&quot; / 74 kg (165 lbs)</td></tr>
                       <tr><td className="py-2 text-slate-500">Blood Type</td><td className="py-2 font-medium">B+ve</td></tr>
                     </tbody>
@@ -175,7 +176,7 @@ export default function MedicalHistory() {
                   <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
                     <p className="text-sm text-amber-800"><strong>Mother:</strong> Had Multiple Myeloma</p>
                     <p className="text-sm text-amber-800"><strong>Maternal Uncle:</strong> Had Multiple Myeloma</p>
-                    <p className="text-sm text-amber-700 mt-2 italic">Strong hereditary pattern on the maternal side.</p>
+                    <p className="text-sm text-amber-700 mt-2 italic">Family history recorded in the prior history.</p>
                   </div>
                 </div>
               </div>
@@ -187,7 +188,7 @@ export default function MedicalHistory() {
                     <thead>
                       <tr className="bg-slate-100">
                         <th className="text-left py-2 px-3 font-medium">Condition</th>
-                        <th className="text-left py-2 px-3 font-medium">Management</th>
+                        <th className="text-left py-2 px-3 font-medium">Previously recorded management</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -199,6 +200,7 @@ export default function MedicalHistory() {
                     </tbody>
                   </table>
                 </div>
+                <p className="text-xs text-slate-500 mt-3">Historical medication entries are not a reconciled current medication list.</p>
               </div>
             </CardContent>
           </Card>
@@ -425,10 +427,10 @@ export default function MedicalHistory() {
                   <div className="text-sm text-slate-600 space-y-2">
                     <p><strong>Key findings:</strong></p>
                     <ul className="list-disc list-inside space-y-1">
-                      <li>Beta-2 Microglobulin: <strong>10,244 ng/mL</strong> (ISS Stage III)</li>
+                      <li>Beta-2 Microglobulin: <strong>10,244 ng/mL</strong></li>
                       <li>Kappa FLC: 38.71 mg/L (2x ULN)</li>
                       <li>IgG: <strong>515 mg/dL</strong> (below normal)</li>
-                      <li>IgM: &lt;21 mg/dL (critically low)</li>
+                      <li>IgM: &lt;21 mg/dL (below the reported interval)</li>
                       <li>eGFR: 43 mL/min (G3b CKD)</li>
                       <li>ANC: 1.48 (neutropenia)</li>
                     </ul>
@@ -515,18 +517,18 @@ export default function MedicalHistory() {
                       <p className="font-medium text-amber-800">Residual disease:</p>
                       <p className="text-amber-700">Non-FDG avid lytic lesions persist across sternum, vertebrae, ribs, sacrum, pelvic bones</p>
                     </div>
-                    <p className="text-xs text-slate-500 italic">Overall: Favourable structural response to maintenance, contrasting with rising biochemical markers</p>
+                    <p className="text-xs text-slate-500 italic">Imaging findings from March 2026; later blood tests do not establish a new imaging outcome.</p>
                   </div>
                 </TimelineEvent>
 
                 {/* April 2026 */}
                 <TimelineEvent 
                   date="April 2026" 
-                  title="Comprehensive Monitoring — Disease Progression Detected"
+                  title="Comprehensive Monitoring - April Results"
                   color="red"
                 >
                   <ul className="list-disc list-inside text-sm text-slate-600 space-y-1">
-                    <li>Kappa FLC: <strong>97.65 mg/L</strong> (highest since Jan 2024 relapse)</li>
+                    <li>Kappa FLC: <strong>97.65 mg/L</strong></li>
                     <li>K/L ratio: <strong>4.367</strong></li>
                     <li>eGFR: <strong>40</strong> (CKD G3b)</li>
                     <li>Calcium: 10.40 mg/dL (high)</li>
@@ -557,9 +559,31 @@ export default function MedicalHistory() {
                         <li>Immunophenotype: CD38+, CD56+, CD117+, cytoKappa+</li>
                       </ul>
                     </div>
-                    <p className="text-xs text-slate-500 italic mt-2">Disease escaping Daratumumab-pomalidomide maintenance — treatment reassessment warranted</p>
+                    <p className="text-xs text-slate-500 italic mt-2">Dated marrow findings; no subsequent marrow assessment is established by the new serum panels.</p>
                   </div>
                 </TimelineEvent>
+
+                <TimelineEvent date="28 May 2026 (final 30 May)" title="Final Myeloma Monitoring Panel" color="blue">
+                  <p className="text-sm text-slate-600">Kappa FLC 130.32 mg/L; lambda 22.81 mg/L; reported ratio 5.713. M-spike 0.30 g/dL. Creatinine 2.08 mg/dL; lab-reported eGFR 34 mL/min/1.73m². Hemoglobin 11.60 g/dL; platelets 110 ×10⁹/L.</p>
+                  <a className="text-sm text-blue-700 underline" href={clinicalSources.may.href}>Final report, pp. 1-11</a>
+                </TimelineEvent>
+                <TimelineEvent date="27 June - 15 July 2026" title="PGI Admission and Teclistamab Initiation" color="purple">
+                  <p className="text-sm text-slate-600">Signed source records document admission on 27 June and discharge on 15 July. Teclistamab doses are documented on 30 June, 3 July, 7 July and 14 July. Later listed doses were plans, not confirmed administrations.</p>
+                  <p className="text-sm text-slate-600 mt-2">Inpatient source labs include 11, 13 and 14 July. On 14 July: hemoglobin 11.1 g/dL, ANC 3.9 ×10⁹/L, platelets 75 ×10⁹/L; creatinine 1.35 mg/dL, potassium 4.43 mmol/L. These are requisition dates; no eGFR is reported in these inpatient pages.</p>
+                  <div className="flex flex-wrap gap-3 mt-2 text-sm text-blue-700 underline">
+                    <a href={clinicalSources.discharge.href}>Signed discharge source, pp. 1-3</a>
+                    <a href={clinicalSources.pgi.href + "#page=24"}>14 July haemogram, p. 24</a>
+                    <a href={clinicalSources.pgi.href + "#page=1"}>14 July chemistry, p. 1</a>
+                  </div>
+                </TimelineEvent>
+                {panelDates.filter(panel => panel.sourceId !== "may").map(panel => {
+                  const result = (analyte: Analyte) => panelResults.find(row => row.sourceId === panel.sourceId && row.analyte === analyte)!
+                  return <TimelineEvent key={panel.sourceId} date={shortDate(panel.specimenDate) + " (final " + shortDate(panel.reportedDate) + ")"} title="Final Myeloma Follow-up Panel" color="blue">
+                    <p className="text-sm text-slate-600">Kappa FLC {result("kappa").raw} mg/L; lambda {result("lambda").raw} mg/L. {result("ratio").value === null ? result("ratio").raw : "Reported K/L ratio: " + result("ratio").raw + "."} M-spike: {result("mSpike").raw} g/dL; IFE: {result("ife").raw}.</p>
+                    <p className="text-sm text-slate-600 mt-2">Hemoglobin {result("hemoglobin").raw} g/dL; ANC {result("anc").raw} ×10⁹/L; platelets {result("platelets").raw} ×10⁹/L. Lab-reported eGFR {result("egfr").raw} mL/min/1.73m².</p>
+                    <a className="text-sm text-blue-700 underline" href={clinicalSources[panel.sourceId].href}>Final source report</a>
+                  </TimelineEvent>
+                })}
               </div>
             </CardContent>
           </Card>
@@ -582,7 +606,7 @@ export default function MedicalHistory() {
                       <th className="text-left py-3 px-4 font-medium">Line</th>
                       <th className="text-left py-3 px-4 font-medium">Period</th>
                       <th className="text-left py-3 px-4 font-medium">Regimen</th>
-                      <th className="text-left py-3 px-4 font-medium">Response</th>
+                      <th className="text-left py-3 px-4 font-medium">Recorded context</th>
                       <th className="text-left py-3 px-4 font-medium">Duration</th>
                     </tr>
                   </thead>
@@ -591,14 +615,14 @@ export default function MedicalHistory() {
                       <td className="py-3 px-4 font-medium">1st Line Induction</td>
                       <td className="py-3 px-4">Jun–Oct 2022</td>
                       <td className="py-3 px-4">DaraVCD (Dara+Bortezomib+Cyclophos+Dexa)</td>
-                      <td className="py-3 px-4"><Badge className="bg-green-100 text-green-800 hover:bg-green-100">CR + MRD Negative</Badge></td>
+                      <td className="py-3 px-4"><Badge className="bg-green-100 text-green-800 hover:bg-green-100">MRD negative in Dec 2022</Badge></td>
                       <td className="py-3 px-4">5 cycles (~5 months)</td>
                     </tr>
                     <tr className="border-b">
                       <td className="py-3 px-4 font-medium">1st Line Maintenance</td>
                       <td className="py-3 px-4">Jan–Aug 2023</td>
                       <td className="py-3 px-4">Bortezomib 1.25mg SC biweekly + Quarterly Zoledronic acid</td>
-                      <td className="py-3 px-4"><Badge className="bg-green-100 text-green-800 hover:bg-green-100">Sustained CR</Badge></td>
+                      <td className="py-3 px-4"><Badge className="bg-green-100 text-green-800 hover:bg-green-100">MRD negative in Aug 2023</Badge></td>
                       <td className="py-3 px-4">~8 months</td>
                     </tr>
                     <tr className="border-b">
@@ -610,13 +634,25 @@ export default function MedicalHistory() {
                     </tr>
                     <tr>
                       <td className="py-3 px-4 font-medium">Post-AKI Maintenance</td>
-                      <td className="py-3 px-4">Jan 2025 → ongoing</td>
+                      <td className="py-3 px-4">Jan 2025 - historical record</td>
                       <td className="py-3 px-4">Daratumumab monthly + Pomalidomide; Denosumab q3mo</td>
-                      <td className="py-3 px-4"><Badge className="bg-amber-100 text-amber-800 hover:bg-amber-100">Persistent low-level disease</Badge></td>
-                      <td className="py-3 px-4">Ongoing</td>
+                      <td className="py-3 px-4"><Badge className="bg-amber-100 text-amber-800 hover:bg-amber-100">Previously documented maintenance</Badge></td>
+                      <td className="py-3 px-4">Not confirmed current</td>
+                    </tr>
+                    <tr className="border-t">
+                      <td className="py-3 px-4 font-medium">Teclistamab initiation</td>
+                      <td className="py-3 px-4">30 Jun - 14 Jul 2026</td>
+                      <td className="py-3 px-4">Step-up 0.06 and 0.3 mg/kg; full doses 1.5 mg/kg</td>
+                      <td className="py-3 px-4">Documented doses only; no response category assigned here</td>
+                      <td className="py-3 px-4">Four documented doses</td>
                     </tr>
                   </tbody>
                 </table>
+              </div>
+              <div className="mt-4 space-y-2 text-sm text-slate-600">
+                <p><strong>Documented administration:</strong> {teclistamabRecord.documentedDoses.map(dose => shortDate(dose.date) + ": " + dose.mgPerKg + " mg/kg (" + dose.mg + " mg)").join("; ")}.</p>
+                <p>{teclistamabRecord.laterDoses} The reviewed records do not establish the current regimen or continued use of older maintenance/supportive medications.</p>
+                <a className="text-blue-700 underline" href={clinicalSources.discharge.href + "#page=3"}>Signed dose schedule, p. 3</a>
               </div>
             </CardContent>
           </Card>
@@ -632,9 +668,25 @@ export default function MedicalHistory() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
+              <div>
+                <h3 className="font-semibold text-slate-900">Latest Serum and Blood Results</h3>
+                <p className="text-sm text-slate-600 mt-1 mb-3">Specimen: 2 October 2026 at 09:01. Final report: 5 October 2026 at 12:33. Values and reference intervals below are transcribed from that report, not a current-day assessment.</p>
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[540px] text-sm">
+                    <thead><tr className="bg-slate-100">{["Marker", "Reported result", "Reference interval", "Source"].map(label => <th key={label} scope="col" className="text-left py-2 px-3 font-medium">{label}</th>)}</tr></thead>
+                    <tbody>{latestResults.map(result => <tr key={result.analyte} className="border-b">
+                      <th scope="row" className="text-left py-2 px-3 font-medium">{clinicalLabels[result.analyte]}</th>
+                      <td className="py-2 px-3 max-w-xs">{result.raw} {result.unit}{result.note && result.analyte === "mSpike" && <p className="text-xs text-slate-500 mt-1">{result.note}</p>}</td>
+                      <td className="py-2 px-3">{result.reference ?? "Not stated"}</td>
+                      <td className="py-2 px-3"><a className="text-blue-700 underline whitespace-nowrap" href={resultHref(result)} aria-label={clinicalLabels[result.analyte] + " source page " + result.publishedPage}>p. {result.publishedPage}</a></td>
+                    </tr>)}</tbody>
+                  </table>
+                </div>
+                <p className="text-xs text-slate-500 mt-3">Reporting limits (&lt;) and the question mark on M-spike are retained. These serum results do not establish marrow MRD status or a treatment-response category.</p>
+              </div>
               {/* MRD Timeline */}
               <div>
-                <h3 className="font-semibold text-slate-900 mb-3">MRD Progression Timeline</h3>
+                <h3 className="font-semibold text-slate-900 mb-3">MRD Results Timeline</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
@@ -648,7 +700,7 @@ export default function MedicalHistory() {
                       <tr className="border-b"><td className="py-2 px-3">Dec 2022</td><td className="py-2 px-3"><Badge className="bg-green-100 text-green-800 hover:bg-green-100">NEGATIVE</Badge></td><td className="py-2 px-3">Post-DaraVCD induction</td></tr>
                       <tr className="border-b"><td className="py-2 px-3">Aug 2023</td><td className="py-2 px-3"><Badge className="bg-green-100 text-green-800 hover:bg-green-100">NEGATIVE</Badge></td><td className="py-2 px-3">Sustained remission</td></tr>
                       <tr className="border-b"><td className="py-2 px-3">Feb 2025</td><td className="py-2 px-3"><Badge className="bg-green-100 text-green-800 hover:bg-green-100">Nil</Badge></td><td className="py-2 px-3">On Dara+Poma maintenance</td></tr>
-                      <tr><td className="py-2 px-3 font-medium">Apr 2026</td><td className="py-2 px-3"><Badge className="bg-red-100 text-red-800 hover:bg-red-100">POSITIVE 0.0017%</Badge></td><td className="py-2 px-3">Biochemical/MRD relapse activity</td></tr>
+                      <tr><td className="py-2 px-3 font-medium">Apr 2026</td><td className="py-2 px-3"><Badge className="bg-red-100 text-red-800 hover:bg-red-100">POSITIVE 0.0017%</Badge></td><td className="py-2 px-3">Flow cytometry result dated April 2026</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -679,324 +731,51 @@ export default function MedicalHistory() {
           </Card>
         </section>
 
-        {/* Section 5: Active Concerns */}
         <section id="concerns">
           <Card>
-            <CardHeader>
-              <CardTitle className="text-xl flex items-center gap-2">
-                <span className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-sm">5</span>
-                Active Concerns as of May 2026
-              </CardTitle>
-            </CardHeader>
+            <CardHeader><CardTitle className="text-xl flex items-center gap-2"><span className="w-8 h-8 shrink-0 rounded-full bg-slate-900 text-white flex items-center justify-center text-sm">5</span>Dated Findings and Record Limits</CardTitle></CardHeader>
             <CardContent>
-              {/* Critical Values */}
-              <div className="mb-6">
-                <h3 className="font-semibold text-slate-900 mb-3">Critical Abnormal Values (April 2026)</h3>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="bg-slate-100">
-                        <th className="text-left py-2 px-3 font-medium">Marker</th>
-                        <th className="text-left py-2 px-3 font-medium">Value</th>
-                        <th className="text-left py-2 px-3 font-medium">Reference</th>
-                        <th className="text-left py-2 px-3 font-medium">Severity</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border-b bg-red-50"><td className="py-2 px-3 font-medium">Kappa FLC</td><td className="py-2 px-3">97.65 mg/L</td><td className="py-2 px-3">3.30–19.40</td><td className="py-2 px-3 text-red-700">5x ULN — highest since Jan 2024</td></tr>
-                      <tr className="border-b bg-red-50"><td className="py-2 px-3 font-medium">K/L Ratio</td><td className="py-2 px-3">4.367</td><td className="py-2 px-3">0.26–1.65</td><td className="py-2 px-3 text-red-700">2.6x ULN</td></tr>
-                      <tr className="border-b bg-red-50"><td className="py-2 px-3 font-medium">MRD</td><td className="py-2 px-3">0.0017%</td><td className="py-2 px-3">Negative</td><td className="py-2 px-3 text-red-700">Positive — residual myeloma</td></tr>
-                      <tr className="border-b bg-red-50"><td className="py-2 px-3 font-medium">BM Plasma Cells</td><td className="py-2 px-3">2%</td><td className="py-2 px-3">&lt;1% on therapy</td><td className="py-2 px-3 text-red-700">Residual disease</td></tr>
-                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">eGFR</td><td className="py-2 px-3">40 mL/min</td><td className="py-2 px-3">&gt;59</td><td className="py-2 px-3 text-amber-700">CKD G3b</td></tr>
-                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">Creatinine</td><td className="py-2 px-3">1.81 mg/dL</td><td className="py-2 px-3">0.70–1.30</td><td className="py-2 px-3 text-amber-700">High</td></tr>
-                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">Calcium</td><td className="py-2 px-3">10.40 mg/dL</td><td className="py-2 px-3">8.80–10.20</td><td className="py-2 px-3 text-amber-700">High (rechecked)</td></tr>
-                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">Potassium</td><td className="py-2 px-3">5.54 mEq/L</td><td className="py-2 px-3">3.50–5.10</td><td className="py-2 px-3 text-amber-700">High (rechecked)</td></tr>
-                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">Phosphorus</td><td className="py-2 px-3">4.20 mg/dL</td><td className="py-2 px-3">2.30–3.70</td><td className="py-2 px-3 text-amber-700">High</td></tr>
-                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">ANC</td><td className="py-2 px-3">1.45 x10³/uL</td><td className="py-2 px-3">2.00–7.00</td><td className="py-2 px-3 text-amber-700">Neutropenia</td></tr>
-                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">Platelets</td><td className="py-2 px-3">110 x10³/uL</td><td className="py-2 px-3">150–410</td><td className="py-2 px-3 text-amber-700">Thrombocytopenia</td></tr>
-                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">IgM</td><td className="py-2 px-3">&lt;21 mg/dL</td><td className="py-2 px-3">50–300</td><td className="py-2 px-3 text-amber-700">Very low (immunosuppressed)</td></tr>
-                      <tr className="border-b bg-amber-50"><td className="py-2 px-3">TLC</td><td className="py-2 px-3">3.60 thou/mm³</td><td className="py-2 px-3">4.00–10.00</td><td className="py-2 px-3 text-amber-700">Leukopenia</td></tr>
-                      <tr className="border-b bg-yellow-50"><td className="py-2 px-3">Hemoglobin</td><td className="py-2 px-3">12.40 g/dL</td><td className="py-2 px-3">13.00–17.00</td><td className="py-2 px-3 text-yellow-700">Mild anemia</td></tr>
-                      <tr className="bg-yellow-50"><td className="py-2 px-3">IgG</td><td className="py-2 px-3">752 mg/dL</td><td className="py-2 px-3">650–1600</td><td className="py-2 px-3 text-yellow-700">Low-normal (recovering)</td></tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              {/* Numbered Concerns */}
-              <div>
-                <h3 className="font-semibold text-slate-900 mb-3">Concern List</h3>
-                <div className="space-y-3">
-                  <ConcernItem number={1} severity="critical" title="Active Multiple Myeloma (Escaping Maintenance)">
-                    Kappa FLC 97.65 mg/L (highest since Jan 2024 relapse), IgG-Kappa M-spike ~0.2 g/dL, MRD 0.0017% positive, 2% plasma cells by aspirate. Kappa FLC surged from ~37 mg/L (Dec 2025) to 97.65 (Apr 2026) in 4 months. Disease escaping Daratumumab-pomalidomide maintenance — urgent treatment reassessment warranted.
-                  </ConcernItem>
-                  <ConcernItem number={2} severity="high" title="Fluctuating but Persistently Impaired Renal Function (CKD G3a–G3b)">
-                    eGFR improved temporarily Nov–Jan 2026 (51.67) before declining again to ~45 (Mar) and 40 (Apr 2026). Creatinine 1.63–1.81 range. Potassium persistently elevated (5.49–6.25 mmol/L; Dec 2025 flagged critical). Phosphorus elevated. All limit treatment options, especially nephrotoxic agents.
-                  </ConcernItem>
-                  <ConcernItem number={3} severity="high" title="Progressive Thrombocytopenia (2026 trend)">
-                    Platelets declining from 243 (Dec 2025) → 178 (Jan) → 149 (Feb) → 123 (Mar) → 110 (Apr 2026). Giant platelets noted. This 4-month downward trend is concerning for increasing marrow infiltration or drug toxicity.
-                  </ConcernItem>
-                  <ConcernItem number={4} severity="high" title="Worsening Absolute Neutropenia (2026 trend)">
-                    ANC fell from 1.42 (Jan) → 1.33 (Feb) → 1.10 (Mar 2026) — approaching grade 3 neutropenia. Persistent across most of 2025–2026 monitoring with only brief recovery (2.21–2.80) in Nov–Dec 2025. Major infection risk; Pomalidomide dose review needed.
-                  </ConcernItem>
-                  <ConcernItem number={5} severity="high" title="Hypogammaglobulinemia">
-                    IgM &lt;21 mg/dL consistently since at least Dec 2024. IgG below normal in Aug 2025 (515 mg/dL), partially recovered to 752 by Apr 2026 (still lower range). Risk of bacterial/encapsulated organism infections. IVIG prophylaxis may need to be considered.
-                  </ConcernItem>
-                  <ConcernItem number={6} severity="high" title="Beta-2 Microglobulin (ISS Stage III)">
-                    Last measured 10,244 ng/mL (Aug 2025) = ISS Stage III (&gt;5500). Not repeated since. Reflects combined disease burden + renal impairment. Repeat testing needed.
-                  </ConcernItem>
-                  <ConcernItem number={7} severity="moderate" title="Electrolyte/Metabolic Concerns">
-                    Persistent hyperkalemia (5.49–6.25 mmol/L; Dec 2025 critical), elevated calcium (10.09 Mar 2026, 10.40 Apr 2026), elevated phosphorus (4.20 Apr 2026), elevated uric acid. Pattern consistent with renal handling dysfunction + MM-related bone disease.
-                  </ConcernItem>
-                  <ConcernItem number={8} severity="moderate" title="Skeletal Disease — Partial Response (PET-CT Mar 2026)">
-                    D5–D7 paravertebral soft tissue lesion reduced (SUVmax 5.8 → 4.9). Rib fractures healed. Non-FDG avid lytic lesions persist across sternum, vertebrae, ribs, sacrum, pelvic bones. Favourable structural response contrasting with rising biochemical markers.
-                  </ConcernItem>
-                  <ConcernItem number={9} severity="moderate" title="Progressive Anaemia">
-                    Hb consistently below normal (11.0–12.6 g/dL) throughout 2025–2026. RDW persistently elevated (15.6–16.8%) indicating anisocytosis. Mentzer index &gt;29 (IDA pattern). Multifactorial: chronic disease, marrow suppression, possible iron deficiency.
-                  </ConcernItem>
-                </div>
-              </div>
+              <dl className="divide-y divide-slate-200 text-sm">
+                <div className="py-3"><dt className="font-semibold">2 October 2026: blood counts</dt><dd className="text-slate-600 mt-1">ANC 0.91 ×10⁹/L, total leukocytes 3.00 ×10⁹/L and hemoglobin 12.80 g/dL were below the lab intervals. Platelets were 175 ×10⁹/L (lab interval 150-410). <a href={clinicalSources.october.href + "#page=1"} className="text-blue-700 underline">CBC, pp. 1-2</a></dd></div>
+                <div className="py-3"><dt className="font-semibold">2 October 2026: FLC, immunoglobulins and protein studies</dt><dd className="text-slate-600 mt-1">Kappa &lt; 0.56 mg/L and lambda 1.37 mg/L; K/L ratio not calculable per laboratory. IgA &lt;33.0 and IgM &lt;21.0 mg/dL; IgG 890.00 mg/dL. M-spike reported as ? 0.4 g/dL with a suspicious non-discrete band; IFE identifies IgG, Kappa. Low FLC values do not negate the separately reported protein-band finding. <a href={clinicalSources.october.href + "#page=6"} className="text-blue-700 underline">Source, pp. 6-11</a></dd></div>
+                <div className="py-3"><dt className="font-semibold">28 May - 2 October 2026: renal measurements</dt><dd className="text-slate-600 mt-1">Lab-reported eGFR: 34, 46, 52 and 53 mL/min/1.73m² on 28 May, 30 July, 28 August and 2 October respectively. Latest creatinine: 1.43 mg/dL. Inpatient chemistry reports give creatinine, not eGFR. <a href={clinicalSources.october.href + "#page=5"} className="text-blue-700 underline">Latest renal report, p. 5</a></dd></div>
+                <div className="py-3"><dt className="font-semibold">2 October 2026: other laboratory findings</dt><dd className="text-slate-600 mt-1">Beta-2 microglobulin 8450 ng/mL (609-2366); LDH 294.00 U/L (120-246); calcium 9.35 mg/dL (8.80-10.20). No new disease stage is assigned from beta-2 microglobulin alone. <a href={clinicalSources.october.href + "#page=9"} className="text-blue-700 underline">Beta-2, p. 9</a>; <a href={clinicalSources.october.href + "#page=3"} className="text-blue-700 underline">chemistry, p. 3</a>.</dd></div>
+                <div className="py-3"><dt className="font-semibold">1 and 14 July 2026: inpatient platelet findings</dt><dd className="text-slate-600 mt-1">Platelets were printed as 26 ×10⁹/L on 1 July and 75 ×10⁹/L on 14 July; later outpatient values were 175 ×10⁹/L on 28 August and 2 October. No cause or treatment effect is inferred. <a href={clinicalSources.pgi.href + "#page=34"} className="text-blue-700 underline">1 July, p. 34</a>; <a href={clinicalSources.pgi.href + "#page=24"} className="text-blue-700 underline">14 July, p. 24</a>.</dd></div>
+                <div className="py-3"><dt className="font-semibold">Electrolytes and medication status are dated, not current</dt><dd className="text-slate-600 mt-1">Potassium was 6.60 meq/L on 31 March 2025, 5.70 meq/L on 27 August 2025, and 4.43 mmol/L on 14 July 2026. The October panel does not provide an updated potassium result. Current medications and later planned teclistamab administrations are not confirmed by these laboratory records.</dd></div>
+              </dl>
             </CardContent>
           </Card>
         </section>
 
-        {/* Section 6: Biomarker Charts */}
         <section id="charts">
           <Card>
-            <CardHeader>
-              <CardTitle className="text-xl flex items-center gap-2">
-                <span className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm">6</span>
-                Biomarker Charts
-              </CardTitle>
-            </CardHeader>
+            <CardHeader><CardTitle className="text-xl flex items-center gap-2"><span className="w-8 h-8 shrink-0 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm">6</span>Biomarker Charts</CardTitle></CardHeader>
             <CardContent className="space-y-8">
-              {/* Kappa FLC Chart */}
-              <div>
-                <h3 className="font-semibold text-slate-900 mb-2">Kappa Free Light Chain (FLC) Journey</h3>
-                <p className="text-sm text-slate-500 mb-4">Normal range: 3.3–19.4 mg/L</p>
-                <div className="h-80 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={kappaFLCData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
-                      <defs>
-                        <linearGradient id="kappaGradient" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3}/>
-                          <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                      <XAxis 
-                        dataKey="date" 
-                        tick={{ fontSize: 11 }} 
-                        angle={-45} 
-                        textAnchor="end"
-                        height={60}
-                      />
-                      <YAxis 
-                        tick={{ fontSize: 12 }}
-                        domain={[0, 'auto']}
-                        label={{ value: 'mg/L', angle: -90, position: 'insideLeft', fontSize: 12 }}
-                      />
-                      <Tooltip 
-                        contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
-                        formatter={(value: number) => [`${value} mg/L`, 'Kappa FLC']}
-                        labelFormatter={(label) => {
-                          const item = kappaFLCData.find(d => d.date === label)
-                          return item ? `${label} — ${item.event}` : label
-                        }}
-                      />
-                      <ReferenceLine y={19.4} stroke="#22c55e" strokeDasharray="5 5" label={{ value: 'Upper Normal (19.4)', fill: '#22c55e', fontSize: 10, position: 'right' }} />
-                      <Area type="monotone" dataKey="value" stroke="#ef4444" strokeWidth={2} fill="url(#kappaGradient)" dot={{ fill: '#ef4444', strokeWidth: 2, r: 4 }} />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                </div>
+              <p className="text-sm text-slate-600">Dated source results through the 2 October 2026 specimen. Month-only points are retained historical summaries, not verified specimen dates. Points are equally spaced, not a continuous time scale. Reference intervals vary by laboratory.</p>
+              <LabChart title="Kappa Free Light Chain (FLC)" unit="mg/L" data={chartSeries("kappa", kappaFLCData)} series={[{ key: "value", label: "Kappa FLC", color: "#ef4444" }]} reference={19.4} />
+              <p className="text-sm text-slate-600">2 October: kappa &lt; 0.56 mg/L is a reporting limit and is not plotted as zero or 0.56. <a href={clinicalSources.october.href + "#page=11"} className="text-blue-700 underline">FLC source, p. 11</a></p>
+              <LabChart title="eGFR (Lab-reported)" unit="mL/min/1.73m²" data={chartSeries("egfr", eGFRData)} series={[{ key: "value", label: "eGFR", color: "#3b82f6" }]} reference={60} />
+              <LabChart title="Immunoglobulin Levels" unit="mg/dL" data={immunoglobulinChartData} series={[{ key: "IgG", label: "IgG", color: "#8b5cf6" }, { key: "IgA", label: "IgA", color: "#06b6d4" }, { key: "IgM", label: "IgM", color: "#f97316" }]} />
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-[480px] text-sm">
+                  <caption className="text-left text-sm text-slate-600 mb-2">Recent immunoglobulin results (mg/dL). Below-limit results are omitted from numeric lines.</caption>
+                  <thead><tr className="bg-slate-100"><th className="text-left p-2">Specimen</th>{["IgG", "IgA", "IgM"].map(key => <th key={key} className="text-left p-2">{key}</th>)}</tr></thead>
+                  <tbody>{panelDates.map(panel => <tr className="border-b" key={panel.sourceId}><th className="text-left p-2 font-medium">{shortDate(panel.specimenDate)}</th>{(["IgG", "IgA", "IgM"] as const).map(key => { const result = panelResults.find(row => row.sourceId === panel.sourceId && row.analyte === key)!; return <td className="p-2" key={key}><a className="text-blue-700 underline" href={resultHref(result)}>{result.raw}</a></td> })}</tr>)}</tbody>
+                </table>
               </div>
-
-              {/* eGFR Chart */}
-              <div>
-                <h3 className="font-semibold text-slate-900 mb-2">eGFR (Kidney Function) Journey</h3>
-                <p className="text-sm text-slate-500 mb-4">Normal: &gt;60 mL/min/1.73m² | G3b CKD: 30-44</p>
-                <div className="h-72 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={eGFRData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                      <XAxis 
-                        dataKey="date" 
-                        tick={{ fontSize: 11 }} 
-                        angle={-45} 
-                        textAnchor="end"
-                        height={60}
-                      />
-                      <YAxis 
-                        tick={{ fontSize: 12 }}
-                        domain={[0, 100]}
-                        label={{ value: 'mL/min', angle: -90, position: 'insideLeft', fontSize: 12 }}
-                      />
-                      <Tooltip 
-                        contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
-                        formatter={(value: number) => [`${value} mL/min`, 'eGFR']}
-                        labelFormatter={(label) => {
-                          const item = eGFRData.find(d => d.date === label)
-                          return item ? `${label} — ${item.status}` : label
-                        }}
-                      />
-                      <ReferenceLine y={60} stroke="#22c55e" strokeDasharray="5 5" label={{ value: 'Normal (>60)', fill: '#22c55e', fontSize: 10, position: 'right' }} />
-                      <ReferenceLine y={30} stroke="#f59e0b" strokeDasharray="5 5" label={{ value: 'G3b lower', fill: '#f59e0b', fontSize: 10, position: 'right' }} />
-                      <Line type="monotone" dataKey="value" stroke="#3b82f6" strokeWidth={2} dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-
-              {/* Immunoglobulin Chart */}
-              <div>
-                <h3 className="font-semibold text-slate-900 mb-2">Immunoglobulin Levels</h3>
-                <p className="text-sm text-slate-500 mb-4">IgG: 650–1600 | IgM: 50–300 | IgA: 40–350 (mg/dL)</p>
-                <div className="h-72 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={immunoglobulinData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                      <XAxis 
-                        dataKey="date" 
-                        tick={{ fontSize: 11 }} 
-                        angle={-45} 
-                        textAnchor="end"
-                        height={60}
-                      />
-                      <YAxis 
-                        tick={{ fontSize: 12 }}
-                        label={{ value: 'mg/dL', angle: -90, position: 'insideLeft', fontSize: 12 }}
-                      />
-                      <Tooltip 
-                        contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
-                      />
-                      <Legend />
-                      <Line type="monotone" dataKey="IgG" stroke="#8b5cf6" strokeWidth={2} dot={{ fill: '#8b5cf6', r: 4 }} />
-                      <Line type="monotone" dataKey="IgA" stroke="#06b6d4" strokeWidth={2} dot={{ fill: '#06b6d4', r: 4 }} />
-                      <Line type="monotone" dataKey="IgM" stroke="#f97316" strokeWidth={2} dot={{ fill: '#f97316', r: 4 }} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-
-              {/* Hemoglobin Chart */}
-              <div>
-                <h3 className="font-semibold text-slate-900 mb-2">Hemoglobin Trend</h3>
-                <p className="text-sm text-slate-500 mb-4">Normal range: 13.0–17.0 g/dL</p>
-                <div className="h-72 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={hemoglobinData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
-                      <defs>
-                        <linearGradient id="hgbGradient" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#ec4899" stopOpacity={0.3}/>
-                          <stop offset="95%" stopColor="#ec4899" stopOpacity={0}/>
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                      <XAxis 
-                        dataKey="date" 
-                        tick={{ fontSize: 11 }} 
-                        angle={-45} 
-                        textAnchor="end"
-                        height={60}
-                      />
-                      <YAxis 
-                        tick={{ fontSize: 12 }}
-                        domain={[8, 14]}
-                        label={{ value: 'g/dL', angle: -90, position: 'insideLeft', fontSize: 12 }}
-                      />
-                      <Tooltip 
-                        contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
-                        formatter={(value: number) => [`${value} g/dL`, 'Hemoglobin']}
-                      />
-                      <ReferenceLine y={13} stroke="#22c55e" strokeDasharray="5 5" label={{ value: 'Lower Normal (13)', fill: '#22c55e', fontSize: 10, position: 'right' }} />
-                      <Area type="monotone" dataKey="value" stroke="#ec4899" strokeWidth={2} fill="url(#hgbGradient)" dot={{ fill: '#ec4899', strokeWidth: 2, r: 4 }} />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-
-              {/* ANC Chart */}
-              <div>
-                <h3 className="font-semibold text-slate-900 mb-2">Absolute Neutrophil Count (ANC) Trend</h3>
-                <p className="text-sm text-slate-500 mb-4">Normal range: 2.0–7.0 ×10⁹/L | Neutropenia: &lt;2.0</p>
-                <div className="h-72 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={ancData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
-                      <defs>
-                        <linearGradient id="ancGradient" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#f97316" stopOpacity={0.3}/>
-                          <stop offset="95%" stopColor="#f97316" stopOpacity={0}/>
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                      <XAxis 
-                        dataKey="date" 
-                        tick={{ fontSize: 11 }} 
-                        angle={-45} 
-                        textAnchor="end"
-                        height={60}
-                      />
-                      <YAxis 
-                        tick={{ fontSize: 12 }}
-                        domain={[0, 4]}
-                        label={{ value: '×10⁹/L', angle: -90, position: 'insideLeft', fontSize: 12 }}
-                      />
-                      <Tooltip 
-                        contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
-                        formatter={(value: number) => [`${value} ×10⁹/L`, 'ANC']}
-                      />
-                      <ReferenceLine y={2.0} stroke="#22c55e" strokeDasharray="5 5" label={{ value: 'Lower Normal (2.0)', fill: '#22c55e', fontSize: 10, position: 'right' }} />
-                      <ReferenceLine y={1.0} stroke="#ef4444" strokeDasharray="5 5" label={{ value: 'Grade 3 (<1.0)', fill: '#ef4444', fontSize: 10, position: 'right' }} />
-                      <Area type="monotone" dataKey="value" stroke="#f97316" strokeWidth={2} fill="url(#ancGradient)" dot={{ fill: '#f97316', strokeWidth: 2, r: 4 }} />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-
-              {/* Platelet Chart */}
-              <div>
-                <h3 className="font-semibold text-slate-900 mb-2">Platelet Count Trend</h3>
-                <p className="text-sm text-slate-500 mb-4">Normal range: 150–410 ×10⁹/L</p>
-                <div className="h-72 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={plateletData} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
-                      <defs>
-                        <linearGradient id="pltGradient" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#a855f7" stopOpacity={0.3}/>
-                          <stop offset="95%" stopColor="#a855f7" stopOpacity={0}/>
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                      <XAxis 
-                        dataKey="date" 
-                        tick={{ fontSize: 11 }} 
-                        angle={-45} 
-                        textAnchor="end"
-                        height={60}
-                      />
-                      <YAxis 
-                        tick={{ fontSize: 12 }}
-                        domain={[0, 300]}
-                        label={{ value: '×10⁹/L', angle: -90, position: 'insideLeft', fontSize: 12 }}
-                      />
-                      <Tooltip 
-                        contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }}
-                        formatter={(value: number) => [`${value} ×10⁹/L`, 'Platelets']}
-                      />
-                      <ReferenceLine y={150} stroke="#22c55e" strokeDasharray="5 5" label={{ value: 'Lower Normal (150)', fill: '#22c55e', fontSize: 10, position: 'right' }} />
-                      <Area type="monotone" dataKey="value" stroke="#a855f7" strokeWidth={2} fill="url(#pltGradient)" dot={{ fill: '#a855f7', strokeWidth: 2, r: 4 }} />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
+              <LabChart title="Hemoglobin Trend" unit="g/dL" data={chartSeries("hemoglobin", hemoglobinData)} series={[{ key: "value", label: "Hemoglobin", color: "#ec4899" }]} reference={13} />
+              <LabChart title="Absolute Neutrophil Count (ANC)" unit="×10⁹/L" data={chartSeries("anc", ancData)} series={[{ key: "value", label: "ANC", color: "#ea580c" }]} reference={2} />
+              <p className="text-xs text-slate-500">PGI dates are requisition dates. ANC is not reported on 27 June or 11 July and is left blank, not calculated from other counts.</p>
+              <LabChart title="Platelet Count Trend" unit="×10⁹/L" data={chartSeries("platelets", plateletData)} series={[{ key: "value", label: "Platelets", color: "#a855f7" }]} reference={150} />
+              <p className="text-xs text-slate-500">Counts reported as thou/mm³ are numerically equivalent to ×10⁹/L. Older platelet results in lacs/mm³ are multiplied by 100 for chart units; original units remain in the source records.</p>
             </CardContent>
           </Card>
         </section>
 
         {/* Footer */}
         <footer className="text-center text-sm text-slate-500 py-8 border-t border-slate-200">
-          <p>Medical History Record — Last Updated: May 2026</p>
-          <p className="mt-1">This document is for medical reference purposes only.</p>
+          <p>Medical History Record - Updated 22 October 2026; latest final panel 5 October 2026</p>
+          <p className="mt-1">For medical reference. Dated records are not a current medication list or treatment recommendation.</p>
         </footer>
       </main>
     </div>
@@ -1038,33 +817,45 @@ function TimelineEvent({
   )
 }
 
-// Concern Item Component
-function ConcernItem({ 
-  number, 
-  severity, 
-  title, 
-  children 
-}: { 
-  number: number
-  severity: "critical" | "high" | "moderate"
-  title: string
-  children: React.ReactNode 
-}) {
-  const severityClasses = {
-    critical: "border-l-red-500 bg-red-50",
-    high: "border-l-amber-500 bg-amber-50",
-    moderate: "border-l-yellow-500 bg-yellow-50",
-  }
 
-  return (
-    <div className={`border-l-4 ${severityClasses[severity]} rounded-r-lg p-4`}>
-      <div className="flex items-start gap-3">
-        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-slate-900 text-white text-xs flex items-center justify-center font-medium">{number}</span>
-        <div>
-          <h4 className="font-semibold text-slate-900">{title}</h4>
-          <p className="text-sm text-slate-600 mt-1">{children}</p>
-        </div>
-      </div>
-    </div>
-  )
+type ChartRow = { date: string; value?: number | null; IgG?: number | null; IgA?: number | null; IgM?: number | null; result?: ClinicalResult; legacy?: boolean; results?: ClinicalResult[] }
+const immunoglobulinChartData: ChartRow[] = [
+  ...immunoglobulinData.map(row => ({ ...row, legacy: true, IgM: historicalIgChartValue(row.date, "IgM", row.IgM), IgA: historicalIgChartValue(row.date, "IgA", row.IgA) })),
+  ...panelDates.map(panel => {
+    const rows = panelResults.filter(result => result.sourceId === panel.sourceId && ["IgG", "IgA", "IgM"].includes(result.analyte))
+    return { date: shortDate(panel.specimenDate), results: rows, ...Object.fromEntries(rows.map(result => [result.analyte, chartValue(result)])) }
+  }),
+]
+
+function ClinicalTooltip({ active, payload, label }: TooltipProps<number, string>) {
+  const row = payload?.[0]?.payload as ChartRow | undefined
+  if (!active || !row) return null
+  const rows = row.result ? [row.result] : row.results
+  return <div className="max-w-[260px] rounded border border-slate-200 bg-white p-3 text-xs shadow-md">
+    <p className="font-semibold">{label}</p>
+    {rows ? rows.map(result => <p key={result.analyte} className="mt-1">{clinicalLabels[result.analyte]}: {result.raw} {result.unit}<br /><span className="text-slate-500">{result.dateBasis === "requisition" ? "Requisition" : "Specimen"}: {result.date}; source p. {result.publishedPage}{result.reportedDate ? "; reported " + result.reportedDate : ""}</span></p>) : <><p className="text-slate-500">Historical month-level summary</p>{payload?.map(item => {
+      const limit = historicalIgLimits.find(result => result.legacyLabel === row.date && result.analyte === item.dataKey)
+      return <p key={String(item.dataKey)} className="mt-1">{item.name}: {limit ? limit.raw + " mg/dL" : item.value ?? "Not reported"}{limit && <><br /><span className="text-slate-500">Specimen: {limit.specimenDate}; source p. {limit.page}; reported {limit.reportedDate}</span></>}</p>
+    })}</>}
+  </div>
+}
+
+function LabChart({ title, unit, data, series, reference }: { title: string; unit: string; data: ChartRow[]; series: { key: string; label: string; color: string }[]; reference?: number }) {
+  return <div className="min-w-0" role="figure" aria-label={title + " in " + unit}>
+    <h3 className="font-semibold text-slate-900 mb-1">{title}</h3>
+    <p className="text-xs text-slate-500 mb-3">{unit}{reference !== undefined ? " | Reference line: " + reference : ""}</p>
+    <div className="overflow-x-auto"><div className="h-80 min-w-[560px]">
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={data} margin={{ top: 10, right: 16, left: 0, bottom: 16 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+          <XAxis dataKey="date" tick={{ fontSize: 10 }} angle={-45} textAnchor="end" height={82} minTickGap={12} interval="preserveStartEnd" />
+          <YAxis tick={{ fontSize: 11 }} width={46} domain={[0, "auto"]} />
+          <Tooltip content={<ClinicalTooltip />} filterNull={false} />
+          {series.length > 1 && <Legend />}
+          {reference !== undefined && <ReferenceLine y={reference} stroke="#16a34a" strokeDasharray="5 5" />}
+          {series.map(item => <Line key={item.key} type="linear" dataKey={item.key} name={item.label} stroke={item.color} strokeWidth={2} dot={{ r: 3 }} connectNulls={false} isAnimationActive={false} />)}
+        </LineChart>
+      </ResponsiveContainer>
+    </div></div>
+  </div>
 }
